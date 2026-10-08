@@ -1,0 +1,11 @@
+# 构建产物（新提交不再纳入；已并入的历史文件不受影响）
+__pycache__/
+*.py[cod]
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+node_modules/
+.DS_Store
+Thumbs.db
+desktop.ini
