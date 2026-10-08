@@ -1,5 +1,13 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-08 · 索引新增「oc-plugin-activator」
+
+- 索引新增 [`oc-plugin-activator`](https://github.com/Simiely/oc-plugin-activator)（v1.0）
+  —— OctaneRender 缓存清理 / 资源部署的 **Windows 工具**（不是 C4D 插件），因此归入本索引
+- 「Blender 生态（PC 端）」分类扩为「**3D / 渲染生态（PC 端）**」，容纳两个宿主软件的外围 PC 工具
+
+---
+
 ## 仓库 · 2026-10-08 · 索引新增「Blender 生态（PC 端）」
 
 - 索引表新增一行 [`blender-render-console`](https://github.com/Simiely/blender-render-console)（v0.8.0）。

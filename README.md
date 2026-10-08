@@ -28,14 +28,16 @@
 |---|---|---|---|---|
 | **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
 
-### 🎬 Blender 生态（PC 端）
+### 🎬 3D / 渲染生态（PC 端）
 
 | 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
 | **[`blender-render-console`](https://github.com/Simiely/blender-render-console)** | 无头调 Blender 渲染控制台：实时进度 / 预计结束时间 / 崩溃自动续跑 | Python · tkinter | [`v0.8.0`](https://github.com/Simiely/blender-render-console/releases/latest) | 2026-10-06 |
+| **[`oc-plugin-activator`](https://github.com/Simiely/oc-plugin-activator)** | 一键清空 OctaneRender 缓存 + 部署资源（Cinema 4D / OC 用） | Python · tkinter → exe | [`v1.0`](https://github.com/Simiely/oc-plugin-activator/releases/latest) | 2026-06-23 |
 
-> 它名字带 `blender-`，但**是跑在 PC 上的独立程序，不是 Blender 插件** ——
-> Blender 插件见 [`blender-addons`](https://github.com/Simiely/blender-addons)。
+> 它们名字带 `blender-` / `oc-`，但**都是跑在 PC 上的独立程序，不是宿主软件的插件** ——
+> Blender 插件见 [`blender-addons`](https://github.com/Simiely/blender-addons)，
+> C4D 插件见 [`c4d-tools`](https://github.com/Simiely/c4d-tools)。
 
 ## 说明
 
