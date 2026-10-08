@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-10-08（commit `<本提交>`）索引新增 oc-plugin-activator；「Blender 生态」扩为「3D / 渲染生态」
+> 📌 **文档基线**：2026-10-08（commit `49bcf77`）索引新增 oc-plugin-activator；「Blender 生态」扩为「3D / 渲染生态」
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
