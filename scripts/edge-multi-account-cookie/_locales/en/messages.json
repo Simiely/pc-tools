@@ -1,0 +1,75 @@
+{
+  "extName": { "message": "Cookie Switcher" },
+  "extDesc": { "message": "Securely save and switch website account cookies with local encrypted storage and WebDAV backup" },
+
+  "currentSite": { "message": "Current Site" },
+  "domainPlaceholder": { "message": "Fetching current tab domain..." },
+
+  "accountName": { "message": "Account Name" },
+  "accountNamePlaceholder": { "message": "e.g. Work, Personal" },
+
+  "accountGroup": { "message": "Group (Optional)" },
+  "accountGroupPlaceholder": { "message": "e.g. Shopping, Social" },
+
+  "btnSave": { "message": "💾 Save Current Account" },
+  "btnSwitch": { "message": "🔄 Switch to This Account" },
+  "btnDelete": { "message": "🗑️ Delete" },
+  "btnEdit": { "message": "✎ Edit" },
+  "btnLoginNew": { "message": "➕ Login New Account" },
+  "btnOptions": { "message": "⚙️ Settings" },
+
+  "noAccounts": { "message": "No saved accounts" },
+  "accountCount": { "message": "{count} account(s)" },
+  "accountExpired": { "message": "⚠ All cookies of this account have expired" },
+
+  "msgSaved": { "message": "✓ Account saved" },
+  "msgSwitched": { "message": "✓ Switched to 「{name}」" },
+  "msgDeleted": { "message": "✓ Account deleted" },
+  "msgNoAccounts": { "message": "No saved accounts for this site" },
+  "msgNeedName": { "message": "Please enter an account name" },
+  "msgError": { "message": "Operation failed: {error}" },
+  "msgCookieCleared": { "message": "✓ Cookies cleared. Login in new tab." },
+
+  "labelGroup": { "message": "Group" },
+  "labelUngrouped": { "message": "Ungrouped" },
+
+  "confirmDelete": { "message": "Are you sure you want to delete「{name}」?" },
+  "lockTitle": { "message": "Password lock enabled" },
+  "lockPlaceholder": { "message": "Enter password to unlock" },
+  "lockUnlock": { "message": "Unlock" },
+  "lockWrongPin": { "message": "Wrong password" },
+  "lockLocked": { "message": "Too many attempts, retry in {seconds}s" },
+
+  "optionsTitle": { "message": "Cookie Switcher Settings" },
+  "optionsSecurity": { "message": "Security" },
+  "optionsPinLock": { "message": "Password Lock" },
+  "optionsPinEnabled": { "message": "Enable Password Lock" },
+  "optionsPinSet": { "message": "Set Password" },
+  "optionsPinCurrent": { "message": "Current Password" },
+  "optionsPinNew": { "message": "New Password" },
+  "optionsPinConfirm": { "message": "Confirm Password" },
+  "optionsPinMismatch": { "message": "Passwords do not match" },
+  "optionsPinSaved": { "message": "Password saved successfully" },
+
+  "optionsExport": { "message": "Export Data" },
+  "optionsExportBtn": { "message": "Export (Encrypted)" },
+  "optionsImport": { "message": "Import Data" },
+  "optionsImportBtn": { "message": "Import Data" },
+  "optionsDataNote": { "message": "Enter a password to encrypt export. Enter that password to decrypt and import." },
+
+  "optionsWebdav": { "message": "WebDAV Remote Backup" },
+  "optionsWebdavDesc": { "message": "Upload encrypted backups to a WebDAV server (e.g. Jianguoyun, Nextcloud). Password lock required; remote files are AES-GCM ciphertext." },
+  "optionsWebdavUrl": { "message": "Server URL" },
+  "optionsWebdavUser": { "message": "Username" },
+  "optionsWebdavPass": { "message": "Password" },
+  "optionsWebdavKeep": { "message": "Keep Count" },
+  "optionsWebdavSchedule": { "message": "Auto Backup" },
+  "optionsWebdavManual": { "message": "Manual (button only)" },
+  "optionsWebdavDaily": { "message": "Daily" },
+  "optionsWebdavWeekly": { "message": "Weekly" },
+  "optionsWebdavTest": { "message": "🔌 Test Connection" },
+  "optionsWebdavSave": { "message": "💾 Save Config" },
+  "optionsWebdavPush": { "message": "📤 Backup Now" },
+  "optionsWebdavPull": { "message": "📥 Restore" },
+  "optionsWebdavRemove": { "message": "🗑 Clear Config" }
+}
