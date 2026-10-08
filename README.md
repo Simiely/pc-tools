@@ -1,40 +1,40 @@
-# pc-tools
+# pc-tools · Windows / PC 工具索引
 
-个人 **Windows / PC 工具集**（monorepo）—— 所有公开桌面工具的**唯一源码源**。
-仿 [**ae-tools**](https://github.com/Simiely/ae-tools) / [**c4d-tools**](https://github.com/Simiely/c4d-tools) 的标准维护：一个仓库管全部、四件套文档、按形态分目录。
+> 🔖 **本仓库是索引仓库（导航中心），不放任何代码。**
+> 每个工具的**开发、构建、发行**都在它**自己的独立仓库**里进行 —— 点下表链接直达。
 
-## 目录结构
+## 工具一览
 
-```
-pc-tools/
-├─ README.md · AGENTS.md · DEVELOPMENT.md · CHANGELOG.md   四件套文档
-├─ apps/        独立程序（有 GUI / 常驻 / 需构建）
-├─ scripts/     轻量脚本类（一次性修复 / 小工具）
-├─ web/         本地 HTML 小工具
-├─ tips/        使用技巧知识库
-└─ releases/    发行包归档
-```
+### 🖥️ 常驻程序
 
-## 工具总览
-
-| 工具 | 位置 | 技术 | 说明 | 原独立仓库 |
+| 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
-| 窗口深色蒙版 WindowTinter | [`apps/WindowTinter/`](./apps/WindowTinter) | C# (WinForms) | 给任意窗口叠深色半透明蒙版，切后台自动半透明 | `Simiely/WindowTinter` |
-| 多用户剪贴板 clipboard-tool | [`apps/clipboard-tool/`](./apps/clipboard-tool) | C# (WPF) + Node | 粘贴即存 / 拼音搜索 / 标签 / WebDAV 同步 | `Simiely/clipboard-tool` |
-| 资源管理器白条修复 | [`scripts/ExplorerBlurMica-whitebar-fix/`](./scripts/ExplorerBlurMica-whitebar-fix) | 脚本 | 修 ExplorerBlurMica 拉起下载目录时的底部白条 | `Simiely/ExplorerBlurMica-whitebar-fix` |
-| 资源管理器刷新修复 | [`scripts/windows-explorer-refresh-fix/`](./scripts/windows-explorer-refresh-fix) | 脚本 | 修下载后资源管理器不自动刷新（要按 F5） | `Simiely/windows-explorer-refresh-fix` |
-| Edge 多账号 Cookie 切换 | [`scripts/edge-multi-account-cookie/`](./scripts/edge-multi-account-cookie) | JS | Edge 多账号 cookie 切换 | `Simiely/edge-multi-account-cookie` |
-| 目录映射表 dirmap | [`web/dirmap/`](./web/dirmap) | HTML/JS | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | `Simiely/dirmap` |
+| **[`WindowTinter`](https://github.com/Simiely/WindowTinter)** | 给任意窗口叠深色半透明蒙版；切到后台自动变半透明 | C# · WinForms | [`v6.1.0`](https://github.com/Simiely/WindowTinter/releases/latest) | 2026-08-06 |
+| **[`clipboard-tool`](https://github.com/Simiely/clipboard-tool)** | 多用户剪贴板管理：粘贴即存 / 拼音搜索 / 标签 / WebDAV 同步 | C# · WPF + Node | [`v0.7.6`](https://github.com/Simiely/clipboard-tool/releases/latest) | 2026-09-13 |
+| **[`MonitorBrightness`](https://github.com/Simiely/MonitorBrightness)** | 外接显示器亮度定时调节（DDC/CI 硬件调光，免常驻单文件 exe） | Python · tkinter | [`v1.6.4`](https://github.com/Simiely/MonitorBrightness/releases/latest) | 2026-10-08 |
+| **[`gh-latency`](https://github.com/Simiely/gh-latency)** | GitHub 延迟监视器 | Python · GUI | [`v1.0.0`](https://github.com/Simiely/gh-latency/releases/latest) | 2026-10-08 |
 
-## 构建 / 运行
+### 🔧 系统修复
 
-各工具技术栈不同（C# / Python / JS / HTML），具体构建与运行方式见**各自目录内的 README**。
+| 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
+|---|---|---|---|---|
+| **[`ExplorerBlurMica-whitebar-fix`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix)** | 修 ExplorerBlurMica 拉起下载目录时的底部白条 | 脚本 | [`v1.0.0`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix/releases/latest) | 2026-07-12 |
+| **[`windows-explorer-refresh-fix`](https://github.com/Simiely/windows-explorer-refresh-fix)** | 修下载后资源管理器不自动刷新（要按 F5） | 脚本 | [`v1.0.0`](https://github.com/Simiely/windows-explorer-refresh-fix/releases/latest) | 2026-07-11 |
+| **[`edge-multi-account-cookie`](https://github.com/Simiely/edge-multi-account-cookie)** | Edge 多账号 Cookie 切换 | JavaScript | [`v2.11.11`](https://github.com/Simiely/edge-multi-account-cookie/releases/latest) | 2026-08-24 |
 
-## 文档规范
+### 🧰 本地小工具
 
-按 [knowledge-base](https://github.com/Simiely/knowledge-base) 的单项目规范维护四件套。
+| 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
+|---|---|---|---|---|
+| **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
+
+## 说明
+
+- **一个工具一个仓库**：源码、Issue、Releases（exe 下载）都在各自仓库；
+- 本仓库只负责**索引与导航**，新增工具＝在这里加一行；
+- 为什么不做 monorepo / 不归档：工具大多通过 **GitHub Releases 分发 exe**，而仓库一旦归档就**完全只读、Releases 也发不了**。所以统一改为「各仓库独立 + 本仓做索引」。
+- 文档规范遵循 [knowledge-base 单项目规范](https://github.com/Simiely/knowledge-base)。
 
 ## 相关仓库
 
-本仓库为下列工具的**唯一维护处**，原独立仓库内容均已并入、原仓库归档只读。
-（例外：`MonitorBrightness` 仍在原仓库 [`Simiely/MonitorBrightness`](https://github.com/Simiely/MonitorBrightness) 活跃开发中、暂未纳入本仓；`gh-latency` 内容未成形、`MultiSwitch` 属私有，均**未并入**。）
+- 其它领域的工具索引：[`ae-tools`](https://github.com/Simiely/ae-tools)（After Effects）· [`blender-addons`](https://github.com/Simiely/blender-addons)（Blender）· [`c4d-tools`](https://github.com/Simiely/c4d-tools)（Cinema 4D）
