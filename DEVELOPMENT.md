@@ -23,13 +23,12 @@ pc-tools/
 |---|---|---|
 | `apps/WindowTinter/` | `Simiely/WindowTinter` | C# (WinForms) |
 | `apps/clipboard-tool/` | `Simiely/clipboard-tool` | C# (WPF) + Node |
-| `apps/MonitorBrightness/` | `Simiely/MonitorBrightness` | Python |
 | `scripts/ExplorerBlurMica-whitebar-fix/` | `Simiely/ExplorerBlurMica-whitebar-fix` | 脚本 |
 | `scripts/windows-explorer-refresh-fix/` | `Simiely/windows-explorer-refresh-fix` | 脚本 |
 | `scripts/edge-multi-account-cookie/` | `Simiely/edge-multi-account-cookie` | JS |
 | `web/dirmap/` | `Simiely/dirmap` | HTML/JS |
 
-未并入：`gh-latency`（内容未成形，暂缓）、`MultiSwitch`（私有，不并入）。
+未并入：`MonitorBrightness`（源仓库仍在活跃开发，2026-10-08 移出本仓）、`gh-latency`（内容未成形，暂缓）、`MultiSwitch`（私有，不并入）。
 
 ## 每次改动的动作清单
 

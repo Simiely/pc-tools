@@ -21,7 +21,6 @@ pc-tools/
 |---|---|---|---|---|
 | 窗口深色蒙版 WindowTinter | [`apps/WindowTinter/`](./apps/WindowTinter) | C# (WinForms) | 给任意窗口叠深色半透明蒙版，切后台自动半透明 | `Simiely/WindowTinter` |
 | 多用户剪贴板 clipboard-tool | [`apps/clipboard-tool/`](./apps/clipboard-tool) | C# (WPF) + Node | 粘贴即存 / 拼音搜索 / 标签 / WebDAV 同步 | `Simiely/clipboard-tool` |
-| 显示器亮度定时 MonitorBrightness | [`apps/MonitorBrightness/`](./apps/MonitorBrightness) | Python | DDC/CI 硬件调光 · 多时间段定时 · 免安装单文件 exe | `Simiely/MonitorBrightness` |
 | 资源管理器白条修复 | [`scripts/ExplorerBlurMica-whitebar-fix/`](./scripts/ExplorerBlurMica-whitebar-fix) | 脚本 | 修 ExplorerBlurMica 拉起下载目录时的底部白条 | `Simiely/ExplorerBlurMica-whitebar-fix` |
 | 资源管理器刷新修复 | [`scripts/windows-explorer-refresh-fix/`](./scripts/windows-explorer-refresh-fix) | 脚本 | 修下载后资源管理器不自动刷新（要按 F5） | `Simiely/windows-explorer-refresh-fix` |
 | Edge 多账号 Cookie 切换 | [`scripts/edge-multi-account-cookie/`](./scripts/edge-multi-account-cookie) | JS | Edge 多账号 cookie 切换 | `Simiely/edge-multi-account-cookie` |
@@ -37,5 +36,5 @@ pc-tools/
 
 ## 相关仓库
 
-本仓库为这些工具的**唯一维护处**。原独立仓库的内容均已并入本仓库，原仓库归档只读。
-（注：`gh-latency` 因内容尚未成形、`MultiSwitch` 因属私有，均**未并入**本仓库。）
+本仓库为下列工具的**唯一维护处**，原独立仓库内容均已并入、原仓库归档只读。
+（例外：`MonitorBrightness` 仍在原仓库 [`Simiely/MonitorBrightness`](https://github.com/Simiely/MonitorBrightness) 活跃开发中、暂未纳入本仓；`gh-latency` 内容未成形、`MultiSwitch` 属私有，均**未并入**。）
