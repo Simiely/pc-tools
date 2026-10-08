@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+
+# 生成的地图实例（工具仓库不含实例数据）
+*-目录地图.html
+*-目录地图.data.js
+notes.json
