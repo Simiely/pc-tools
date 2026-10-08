@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <AssemblyName>WindowTinter</AssemblyName>
+    <RootNamespace>WindowTinter</RootNamespace>
+    <AssemblyTitle>暗幕</AssemblyTitle>
+    <Description>暗幕 — 给任意窗口叠加深色半透明蒙版的 Windows 常驻小工具</Description>
+    <Version>5.5.2</Version>
+    <AssemblyVersion>5.5.2</AssemblyVersion>
+    <FileVersion>5.5.2</FileVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <!-- Win11/PerMonitorV2 高 DPI：构建时由构建器注入清单（进程启动时即生效，无调用顺序坑、无 WFAC010 警告）。
+         配合 MainForm 的 AutoScaleMode=Dpi，主界面按各屏幕真实缩放比自动缩放。 -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="app.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
