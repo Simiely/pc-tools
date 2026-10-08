@@ -1,5 +1,13 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-08 · 索引新增「Blender 生态（PC 端）」
+
+- 索引表新增一行 [`blender-render-console`](https://github.com/Simiely/blender-render-console)（v0.8.0）。
+  它名字带 `blender-`，但**是跑在 PC 上的独立程序、不是 Blender 插件**（插件见 `blender-addons`），
+  因此归入本索引，而非插件集
+
+---
+
 ## 仓库 · 2026-10-08 · **由 monorepo 转为索引仓库**
 
 - **删除全部工具代码**：`apps/`（202 文件）、`scripts/`（62 文件）、`web/`（9 文件）、`tips/`、`releases/`，

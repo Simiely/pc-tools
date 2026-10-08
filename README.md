@@ -28,6 +28,15 @@
 |---|---|---|---|---|
 | **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
 
+### 🎬 Blender 生态（PC 端）
+
+| 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
+|---|---|---|---|---|
+| **[`blender-render-console`](https://github.com/Simiely/blender-render-console)** | 无头调 Blender 渲染控制台：实时进度 / 预计结束时间 / 崩溃自动续跑 | Python · tkinter | [`v0.8.0`](https://github.com/Simiely/blender-render-console/releases/latest) | 2026-10-06 |
+
+> 它名字带 `blender-`，但**是跑在 PC 上的独立程序，不是 Blender 插件** ——
+> Blender 插件见 [`blender-addons`](https://github.com/Simiely/blender-addons)。
+
 ## 说明
 
 - **一个工具一个仓库**：源码、Issue、Releases（exe 下载）都在各自仓库；
