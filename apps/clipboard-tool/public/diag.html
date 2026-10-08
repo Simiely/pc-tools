@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>剪贴板环境诊断</title>
+<style>
+body{background:#1A1A1A;color:#DADADA;font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;font-size:14px;padding:24px;max-width:720px;margin:0 auto;line-height:1.7}
+h1{color:#C9A96E;font-size:18px}
+.card{background:#2F2F2F;border-radius:12px;padding:16px 18px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.card h3{margin:0 0 10px;font-size:14px;color:#DADADA}
+button{background:#C9A96E;color:#101014;border:none;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;margin-right:8px;font-weight:500}
+button.ghost{background:#141414;color:#848484}
+pre{background:#141414;border-radius:8px;padding:10px 12px;font-size:12px;overflow:auto;white-space:pre-wrap;word-break:break-all;color:#9FBF8F}
+textarea{width:100%;height:70px;background:#141414;color:#DADADA;border:none;border-radius:8px;padding:10px;font-size:13px;font-family:inherit}
+.env{color:#8FA3B8}
+.err{color:#E08A7A}
+.ok{color:#9FBF8F}
+</style>
+</head>
+<body>
+<h1>剪贴板环境诊断（iframe 权限实测）</h1>
+<div class="card">
+  <h3>1. 环境信息</h3>
+  <pre id="env" class="env">检测中…</pre>
+</div>
+<div class="card">
+  <h3>2. Clipboard API 写入（clipboard.write 双格式）</h3>
+  <button id="btnWrite">clipboard.write(html+plain)</button>
+  <pre id="rWrite">未测试</pre>
+</div>
+<div class="card">
+  <h3>3. execCommand 复制（div + setData 双格式）</h3>
+  <button id="btnExec">execCommand('copy')</button>
+  <pre id="rExec">未测试</pre>
+</div>
+<div class="card">
+  <h3>4. Clipboard API 读取（clipboard.read → html?）</h3>
+  <button id="btnRead">clipboard.read()</button>
+  <pre id="rRead">未测试（先在 5 里粘贴内容再读）</pre>
+</div>
+<div class="card">
+  <h3>5. paste 事件（在下方粘贴内容后看 html 是否可取）</h3>
+  <textarea id="ta" placeholder="先在 Word/网页复制带格式内容，再 Ctrl+V 粘贴到这里"></textarea>
+  <pre id="rPaste">未粘贴</pre>
+</div>
+<div class="card">
+  <h3>6. 读回验证（readText 看当前剪贴板）</h3>
+  <button id="btnReadText">clipboard.readText()</button>
+  <pre id="rReadText">未测试</pre>
+</div>
+<div class="card">
+  <h3>7. 端到端模拟（5 粘贴的 Word html → execCommand 复制 → 读回）</h3>
+  <button id="btnE2e">execCommand 复制粘贴到的 Word html</button>
+  <pre id="rE2e">先在第 5 项粘贴 Word 内容</pre>
+</div>
+<div class="card">
+  <h3>8. xmlns:w 验证（带 Word 命名空间声明的 html → clipboard.write → 读回 xmlns 是否保留）</h3>
+  <button id="btnXns">clipboard.write(带 xmlns:w 的 html)</button>
+  <pre id="rXns">未测试（Word 识别"来自 Word"靠 xmlns:w 标记，见 roosterjs/CKEditor 官方实现）</pre>
+</div>
+<script>
+const out = (id, text, cls) => { const el = document.getElementById(id); el.textContent = text; el.className = cls || ""; };
+// 1. 环境
+const env = [
+  "window !== top (iframe?): " + (window !== window.top),
+  "navigator.clipboard: " + (navigator.clipboard ? "存在" : "❌ 不存在"),
+  "ClipboardItem: " + (typeof ClipboardItem !== "undefined" ? "存在" : "❌ 不存在"),
+  "isSecureContext: " + window.isSecureContext,
+  "document.execCommand 类型: " + typeof document.execCommand,
+  "document.hasFocus(): " + document.hasFocus(),
+];
+out("env", env.join("\n"), "env");
+
+// 2. clipboard.write
+document.getElementById("btnWrite").onclick = async () => {
+  out("rWrite", "执行中…");
+  try {
+    await navigator.clipboard.write([new ClipboardItem({
+      "text/html": new Blob(['<div><h3>诊断标题</h3><p>诊断<b>加粗</b>正文</p></div>'], { type: "text/html" }),
+      "text/plain": new Blob(["诊断纯文本"], { type: "text/plain" }),
+    })]);
+    // 写入后立即读回自证（不靠粘贴判断）
+    let back = "（读回失败）";
+    try {
+      const items = await navigator.clipboard.read();
+      const it = items.find(i => i.types.includes("text/html"));
+      if (it) {
+        const blob = await it.getType("text/html");
+        const txt = await blob.text();
+        back = "读回 html 长度: " + txt.length + "\n含 <b>: " + txt.includes("<b") + "\n内容: " + txt.slice(0, 150);
+      } else back = "⚠️ 读回无 text/html 类型!";
+    } catch (re) { back = "读回失败: " + re.name + " — " + re.message; }
+    out("rWrite", "✅ 写入成功\n" + back, "ok");
+  } catch (e) {
+    out("rWrite", "❌ 失败: " + e.name + " — " + e.message, "err");
+  }
+};
+
+// 3. execCommand
+document.getElementById("btnExec").onclick = () => {
+  out("rExec", "执行中…");
+  try {
+    const holder = document.createElement("div");
+    holder.innerHTML = '<h3>诊断标题</h3><p>诊断<b>加粗</b>正文</p>';
+    holder.setAttribute("contenteditable", "true");
+    holder.style.cssText = "position:fixed;top:-9999px;left:-9999px";
+    document.body.appendChild(holder);
+    holder.focus();
+    const sel = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(holder);
+    sel.removeAllRanges(); sel.addRange(range);
+    const onCopy = (e) => {
+      try {
+        e.clipboardData.setData("text/html", '<h3>诊断标题</h3><p>诊断<b>加粗</b>正文</p>');
+        e.clipboardData.setData("text/plain", "诊断纯文本");
+      } catch (ee) { out("rExec", "setData 抛错: " + ee.message, "err"); }
+      e.preventDefault();
+    };
+    document.addEventListener("copy", onCopy);
+    const ok = document.execCommand("copy");
+    document.removeEventListener("copy", onCopy);
+    sel.removeAllRanges(); holder.remove();
+    out("rExec", ok ? "✅ execCommand 返回 true（粘贴应带格式）" : "❌ execCommand 返回 false", ok ? "ok" : "err");
+  } catch (e) {
+    out("rExec", "❌ 异常: " + e.message, "err");
+  }
+};
+
+// 4. clipboard.read
+document.getElementById("btnRead").onclick = async () => {
+  out("rRead", "执行中…");
+  try {
+    const items = await navigator.clipboard.read();
+    const desc = items.map(it => {
+      const types = it.types.join(",");
+      return "types: " + types;
+    });
+    let html = "";
+    for (const it of items) {
+      if (it.types.includes("text/html")) {
+        const blob = await it.getType("text/html");
+        html = await blob.text();
+        break;
+      }
+    }
+    out("rRead", "✅ 读取成功\nitems: " + desc.join(" | ") + "\nhtml 长度: " + html.length + "\nhtml 前 120 字: " + html.slice(0, 120), "ok");
+  } catch (e) {
+    out("rRead", "❌ 失败: " + e.name + " — " + e.message, "err");
+  }
+};
+
+// 5. paste 事件
+let lastPasteHtml = "", lastPastePlain = "";
+document.getElementById("ta").addEventListener("paste", (e) => {
+  try {
+    const cd = e.clipboardData;
+    const html = cd.getData("text/html");
+    const plain = cd.getData("text/plain");
+    lastPasteHtml = html || ""; lastPastePlain = plain || "";
+    out("rPaste", "✅ paste 事件可取\nhtml 长度: " + lastPasteHtml.length + "\nplain 长度: " + lastPastePlain.length + "\n含 <style>: " + lastPasteHtml.includes("<style") + "\nhtml 前 120 字: " + lastPasteHtml.slice(0, 120), lastPasteHtml ? "ok" : "");
+  } catch (e) {
+    out("rPaste", "❌ 异常: " + e.message, "err");
+  }
+});
+
+// 8. xmlns:w 验证（Word 识别"来自 Word"靠 xmlns:w，见 Microsoft roosterjs isWordDesktopDocument.ts / CKEditor paste-from-office）
+const WORD_NS_HTML = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"><head><meta charset="utf-8"></head><body><h1 style="font-size:24pt;color:rgb(15,71,97)">诊断标题</h1><p><b>加粗</b>正文内容</p></body></html>';
+document.getElementById("btnXns").onclick = async () => {
+  out("rXns", "执行中…");
+  try {
+    await navigator.clipboard.write([new ClipboardItem({
+      "text/html": new Blob([WORD_NS_HTML], { type: "text/html" }),
+      "text/plain": new Blob(["诊断标题 加粗正文内容"], { type: "text/plain" }),
+    })]);
+    // 读回
+    let back = "（读回失败）";
+    try {
+      const items = await navigator.clipboard.read();
+      const it = items.find(i => i.types.includes("text/html"));
+      if (it) {
+        const blob = await it.getType("text/html");
+        const txt = await blob.text();
+        back = "读回 html 长度: " + txt.length +
+          "\n含 xmlns:w: " + txt.includes("xmlns:w") +
+          "\n含 urn:schemas-microsoft-com:office:word: " + txt.includes("urn:schemas-microsoft-com:office:word") +
+          "\n含 <style>: " + txt.includes("<style") +
+          "\n前 200 字: " + txt.slice(0, 200);
+      } else back = "⚠️ 读回无 text/html";
+    } catch (re) { back = "读回失败: " + re.name + " — " + re.message; }
+    out("rXns", "✅ 写入成功\n" + back, "ok");
+  } catch (e) {
+    out("rXns", "❌ 失败: " + e.name + " — " + e.message, "err");
+  }
+};
+document.getElementById("btnE2e").onclick = () => {
+  if (!lastPasteHtml) { out("rE2e", "请先在 5 里粘贴 Word 内容", "err"); return; }
+  out("rE2e", "执行中…（复制 html 长度 " + lastPasteHtml.length + "）");
+  try {
+    // v2：holder 只放纯文本（不 innerHTML 解析完整文档——DOM 会剥 <html>/<head>/xmlns），setData 注入原始串
+    const holder = document.createElement("div");
+    holder.textContent = lastPastePlain || lastPasteHtml.replace(/<[^>]+>/g, "");
+    holder.style.cssText = "position:fixed;top:-9999px;left:-9999px";
+    document.body.appendChild(holder);
+    holder.focus();
+    const sel = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(holder);
+    sel.removeAllRanges(); sel.addRange(range);
+    const onCopy = (e) => {
+      e.clipboardData.setData("text/html", lastPasteHtml); // 原始串（含 xmlns/style）
+      e.clipboardData.setData("text/plain", lastPastePlain);
+      e.preventDefault();
+    };
+    document.addEventListener("copy", onCopy);
+    const ok = document.execCommand("copy");
+    document.removeEventListener("copy", onCopy);
+    sel.removeAllRanges(); holder.remove();
+    if (!ok) { out("rE2e", "❌ execCommand 返回 false", "err"); return; }
+    // 读回验证
+    (async () => {
+      try {
+        const items = await navigator.clipboard.read();
+        const it = items.find(i => i.types.includes("text/html"));
+        if (!it) { out("rE2e", "execCommand=true 但读回【无 text/html】⚠️ 写入实际失败", "err"); return; }
+        const blob = await it.getType("text/html");
+        const txt = await blob.text();
+        out("rE2e", "✅ execCommand=true\n读回 html 长度: " + txt.length +
+          "\n含 <style>: " + txt.includes("<style") +
+          "\n含 xmlns:w: " + txt.includes("xmlns:w") +
+          "\n含 <b>/<strong>: " + (txt.includes("<b") || txt.includes("<strong")) +
+          "\n前 200 字: " + txt.slice(0, 200), "ok");
+      } catch (re) {
+        out("rE2e", "读回失败: " + re.name + " — " + re.message, "err");
+      }
+    })();
+  } catch (e) {
+    out("rE2e", "❌ 异常: " + e.message, "err");
+  }
+};
+
+// 6. readText
+document.getElementById("btnReadText").onclick = async () => {
+  out("rReadText", "执行中…");
+  try {
+    const t = await navigator.clipboard.readText();
+    out("rReadText", "✅ 文本: " + t.slice(0, 120), "ok");
+  } catch (e) {
+    out("rReadText", "❌ 失败: " + e.name + " — " + e.message, "err");
+  }
+};
+</script>
+</body>
+</html>

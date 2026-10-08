@@ -1,0 +1,45 @@
+<!-- Controls/TagPicker.xaml - 标签选择器（对齐 app.js renderTagPicker）
+     展示 = 已有标签 ∪ 选中的新标签；chip 点选切换（.tag-pick .tag / .on 金底深字）；
+     输入框回车新建（"新标签，回车添加"，max 20）；SelectionChanged 回调。
+     PasteDialog / EditDialog 复用。 -->
+<UserControl x:Class="ClipboardExe.Controls.TagPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <!-- 新标签输入：transparent + 底部边框（对齐 .paste-adv .tag-pick input；WPF 无虚线边框，用实线近似） -->
+        <Style x:Key="TagPickInput" TargetType="TextBox">
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Cursor" Value="IBeam"/> <!-- 弹窗根 SizeAll 继承覆盖：输入框必须 IBeam -->
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="11.5"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="bd" Background="Transparent" BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,0,0,1">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="PH" Text="{TemplateBinding Tag}" Foreground="{StaticResource DimBrush}"
+                                           Margin="{TemplateBinding Padding}" IsHitTestVisible="False" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="PH" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <!-- chips + 输入框（动态渲染，.tag-pick：flex wrap gap 6） -->
+    <WrapPanel x:Name="ChipBox"/>
+</UserControl>

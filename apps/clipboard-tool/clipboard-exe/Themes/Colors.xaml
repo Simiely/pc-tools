@@ -1,0 +1,80 @@
+﻿<!-- Themes/Colors.xaml - 设计令牌（对齐 public/index.html :root 逐项照搬）
+     层0 · 酒红金：中性黑灰底 #1A1A1A/#2F2F2F + 金 #C9A96E 主强调 + 砖红 #AE4D4D 点缀 + 中性文字 #DADADA -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 背景层级 -->
+    <SolidColorBrush x:Key="BgBrush" Color="#1A1A1A"/>      <!-- bg 窗口背景 -->
+    <SolidColorBrush x:Key="ElevBrush" Color="#1F1F1F"/>    <!-- elev 面板/卡片 -->
+    <SolidColorBrush x:Key="ElevHiBrush" Color="#2A2A2A"/>  <!-- elev-hi 卡片悬浮/凸起 -->
+    <SolidColorBrush x:Key="InsetBrush" Color="#141414"/>   <!-- inset 输入框/凹陷区 -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#3D3D3D"/>  <!-- border 边框/滚动条 -->
+
+    <!-- 文字 -->
+    <SolidColorBrush x:Key="TextBrush" Color="#DADADA"/>    <!-- text 正文 -->
+    <SolidColorBrush x:Key="MutedBrush" Color="#848484"/>   <!-- muted 次要 -->
+    <SolidColorBrush x:Key="DimBrush" Color="#6E6E6E"/>     <!-- dim 弱化 -->
+
+    <!-- 强调/点缀/徽章 -->
+    <SolidColorBrush x:Key="AccentBrush" Color="#C9A96E"/>  <!-- accent 金 · 主强调，深字配 -->
+    <SolidColorBrush x:Key="AccentTextBrush" Color="#2D1A0A"/>  <!-- accent 配深字（选中态文字/置顶图标等） -->
+    <SolidColorBrush x:Key="AccentSoftBrush" Color="#33C9A96E"/>  <!-- accent 16% 透明 · hover 高亮(下拉项) -->
+    <SolidColorBrush x:Key="AccentHiBrush" Color="#D4B47A"/>  <!-- accent-hi 金略亮 · 选中+hover 重叠态 -->
+    <SolidColorBrush x:Key="Accent2Brush" Color="#AE4D4D"/> <!-- accent2 砖红 · 点缀 -->
+    <SolidColorBrush x:Key="Accent2TextBrush" Color="#F5E6E6"/> <!-- 砖红上的暖白字 -->
+    <SolidColorBrush x:Key="GreenBrush" Color="#9FBF8F"/>   <!-- green 文本徽章 -->
+    <SolidColorBrush x:Key="AmberBrush" Color="#D4AF37"/>   <!-- amber 文件徽章 -->
+    <SolidColorBrush x:Key="BlueBrush" Color="#AE4D4D"/>    <!-- blue 链接徽章（砖红） -->
+    <SolidColorBrush x:Key="RedBrush" Color="#E08A7A"/>     <!-- red 危险/错误 -->
+
+    <!-- 圆角（对齐 Web 各控件实际圆角；统一令牌避免硬编码散落） -->
+    <CornerRadius x:Key="RadiusFold">3,3,0,0</CornerRadius><!-- .fic .fold 折叠角 顶 3 / 底 0 -->
+    <CornerRadius x:Key="RadiusIconSm">8</CornerRadius>   <!-- .edit-sec 20x20 序号块 / TypeBadge r-8 -->
+    <CornerRadius x:Key="RadiusIcon">10</CornerRadius>    <!-- .ops .b 26x26 图标钮 r-10(38% 比例,深色底上肉眼可辨的圆角;原 8 太接近方形) -->
+    <CornerRadius x:Key="RadiusCombo">9</CornerRadius>    <!-- .edit-sec select：编辑弹窗「过期」下拉 r-9（比存入弹窗 r-10 略收） -->
+    <CornerRadius x:Key="RadiusBtnSm">10</CornerRadius>   <!-- .btn.sm / .typetab .tt / who 区小按钮 / .paste-adv select r-10 -->
+    <CornerRadius x:Key="RadiusBtn">12</CornerRadius>     <!-- .btn / input / 通用按钮 -->
+    <CornerRadius x:Key="RadiusIconLg">11</CornerRadius>  <!-- 36x36 弹窗头图标块 / 46x56 .fic r-11 -->
+    <CornerRadius x:Key="RadiusMd">14</CornerRadius>        <!-- r-md 容器/typetab 轨道 -->
+    <CornerRadius x:Key="RadiusLg">18</CornerRadius>        <!-- r-lg 卡片/顶栏 -->
+    <CornerRadius x:Key="RadiusSt">6</CornerRadius>         <!-- .st 状态徽章 r-6 圆角矩形（不用 r-pill 99 在 16px 高度元素上会被 clamp 到 h/2 ≈ 8,左右两端近半圆 + 顶底直线 → 视觉呈"叶子/梭形",不是用户期望的圆角矩形） -->
+    <CornerRadius x:Key="RadiusPill">99</CornerRadius>      <!-- r-pill 胶囊（搜索框/存入/标签/开关） -->
+    <CornerRadius x:Key="RadiusScroll">3</CornerRadius>     <!-- 细滚动条 thumb 小圆角（对齐 Web ::-webkit-scrollbar-thumb 9px 圆角缩比；非胶囊） -->
+
+    <!-- 新拟态阴影基色（NeuBorder 用） -->
+    <SolidColorBrush x:Key="ShadowDarkBrush" Color="#80000000"/>   <!-- 深色投影 rgba(0,0,0,.5) -->
+    <SolidColorBrush x:Key="ShadowLightBrush" Color="#59FFFFFF"/>  <!-- 浅色高光 rgba(255,255,255,.35) -->
+
+    <!-- 半透明金（rgba(gold,x) 效果值入令牌） -->
+    <SolidColorBrush x:Key="AccentGlowBrush" Color="#38C9A96E"/>  <!-- 金晕 rgba(gold,.22)：开关选中轨道/标签选中底 -->
+    <SolidColorBrush x:Key="AccentRingBrush" Color="#73C9A96E"/>   <!-- 金描边 rgba(gold,.45)：开关选中描边/卡片 pinned -->
+
+    <!-- 新拟态开关滑块阴影（.opt input[type=checkbox]：凸起滑块 / 选中金晕微光） -->
+    <DropShadowEffect x:Key="ShadowSwitchKnob" Color="Black" BlurRadius="4" ShadowDepth="2" Opacity="0.5" Direction="135"/>
+    <DropShadowEffect x:Key="ShadowSwitchKnobOn" Color="#C9A96E" BlurRadius="6" ShadowDepth="0" Opacity="0.55"/>
+
+    <!-- ============ M3a 增补：半透明色板（对齐 index.html rgba(...) 用法） ============ -->
+    <!-- 徽章/提示底（alpha 对应 Web .15/.16/.18/.08/.2） -->
+    <SolidColorBrush x:Key="GreenSoftBrush" Color="#269FBF8F"/>    <!-- rgba(green, .15)：文本徽章底 -->
+    <SolidColorBrush x:Key="AmberSoftBrush" Color="#29D4AF37"/>    <!-- rgba(amber, .16)：置顶/文件徽章底 -->
+    <SolidColorBrush x:Key="AmberSoftHiBrush" Color="#2ED4AF37"/>  <!-- rgba(amber, .18)：标签选中底 -->
+    <SolidColorBrush x:Key="AmberWarnBrush" Color="#14D4AF37"/>    <!-- rgba(amber, .08)：重复提示底 -->
+    <SolidColorBrush x:Key="Accent2SoftBrush" Color="#26AE4D4D"/>  <!-- rgba(accent2, .15)：链接徽章底 -->
+    <SolidColorBrush x:Key="RedSoftBrush" Color="#26E08A7A"/>      <!-- rgba(red, .15)：危险/错误底 -->
+    <SolidColorBrush x:Key="BlueSoftBrush" Color="#268FA3B8"/>     <!-- rgba(blue2, .15)：富文本徽章底 -->
+    <SolidColorBrush x:Key="PurpleBrush" Color="#B39DDB"/>     <!-- M3b-2b：图片徽章字（紫） -->
+    <SolidColorBrush x:Key="PurpleSoftBrush" Color="#26B39DDB"/>    <!-- M3b-2b：rgba(purple, .15)：图片徽章底 -->
+    <!-- 金色描边（rgba(gold, x)：hover .28 / pinned .65 / 选中 .4） -->
+    <SolidColorBrush x:Key="GoldRingBrush" Color="#47C9A96E"/>
+    <SolidColorBrush x:Key="GoldRingHiBrush" Color="#66C9A96E"/>
+    <SolidColorBrush x:Key="GoldRingStrongBrush" Color="#A6C9A96E"/>
+    <!-- 卡片常驻描边 rgba(white,.2)：BorderClip 把 Effect 阴影裁到圆角内后,卡片 ElevBrush 与
+         背景 #1A1A1A 色差极小边界发糊 → 1px 半透明白细描边兜底边界（hover/pin 金环优先覆盖） -->
+    <SolidColorBrush x:Key="CardEdgeBrush" Color="#33FFFFFF"/>
+    <!-- 亮色文字：链接/过期徽章 #D98A8A；toast 错误白字 -->
+    <SolidColorBrush x:Key="Accent2BrightBrush" Color="#D98A8A"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="#FFFFFF"/>
+    <!-- 卡片内容区 inset-sm 底（浅内嵌）与 JSON 代码窗渐隐 -->
+    <SolidColorBrush x:Key="InsetSmBrush" Color="#1A1A1A"/>
+    <SolidColorBrush x:Key="CodeFadeBrush" Color="#141414"/>
+</ResourceDictionary>

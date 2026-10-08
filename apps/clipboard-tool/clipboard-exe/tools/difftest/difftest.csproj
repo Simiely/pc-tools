@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 双版本一致性差分测试(exe 侧 runner)：链接生产源文件直接编译——测的是产品代码本身，不是复制品。
+       fixtures 见仓库根 tests/fixtures/rules.json(与 Web 侧共用); 由 tests/diff-rules.mjs 编排对拍。 -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>difftest</AssemblyName>
+    <RootNamespace>DiffTest</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!-- 链接生产源文件：规则(去重/排序)所在文件及其依赖链 -->
+  <ItemGroup>
+    <Compile Include="..\..\Models\ClipItem.cs" Link="prod\ClipItem.cs" />
+    <Compile Include="..\..\Models\Tombstone.cs" Link="prod\Tombstone.cs" />
+    <Compile Include="..\..\Models\Transfer.cs" Link="prod\Transfer.cs" />
+    <Compile Include="..\..\Services\CleanUrl.cs" Link="prod\CleanUrl.cs" />
+    <Compile Include="..\..\Services\Pinyin.cs" Link="prod\Pinyin.cs" />
+    <Compile Include="..\..\Services\Storage.cs" Link="prod\Storage.cs" />
+    <Compile Include="..\..\Services\FileStore.cs" Link="prod\FileStore.cs" />
+    <Compile Include="..\..\Services\ClipService.cs" Link="prod\ClipService.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>剪贴板 · 暗黑新拟态设计稿</title>
+<style>
+/* ============================================================
+   暗黑新拟态 Neumorphism 设计系统（迁移稿）
+   来源: dark-homepage-designs.html #neumorph
+   ============================================================ */
+:root{
+  /* 新拟态核心色板（取自风格手册） */
+  --bg:#1c1f26;          /* 页面背景 */
+  --elev:#232730;        /* 凸起面板 */
+  --elev-hi:#272c35;     /* 凸起面板(hover) */
+  --inset:#191c22;       /* 凹陷内嵌 */
+  --border:#2c313b;      /* 高光边(双阴影用) */
+  --text:#d3d8e2;        /* 主文字 */
+  --muted:#9aa0b0;       /* 次级文字 */
+  --dim:#8a90a0;         /* 弱化文字 */
+  --accent:#7f9dff;      /* 主强调蓝 */
+  --accent2:#a3b9ff;     /* 强调浅蓝 */
+  --amber:#e8b45a;       /* 星标/警示 */
+  --green:#8fd6a8;       /* 文本类型 */
+  --blue:#7aa2ff;        /* 链接类型 */
+  --red:#e07a7a;         /* 危险 */
+  --pink:#f0a0b8;        /* 次要点缀 */
+  /* 圆角（新拟态大圆角） */
+  --r-md:14px;
+  --r-lg:18px;
+  --r-pill:99px;
+  /* 双阴影 tokens（新拟态灵魂：暗影 + 高光）——v5 全偏移统一 1px：极浅浮雕，层次靠透明度 */
+  --sh-raised:  1px 1px 3px rgba(0,0,0,.5), -1px -1px 3px rgba(44,49,59,.46);
+  --sh-raised-sm:1px 1px 3px rgba(0,0,0,.45), -1px -1px 3px rgba(44,49,59,.42);
+  --sh-raised-lg:1px 1px 5px rgba(0,0,0,.52), -1px -1px 5px rgba(44,49,59,.48);
+  --sh-inset:  inset 1px 1px 4px rgba(0,0,0,.5), inset -1px -1px 4px rgba(44,49,59,.44);
+  --sh-inset-sm:inset 1px 1px 3px rgba(0,0,0,.45), inset -1px -1px 3px rgba(44,49,59,.4);
+  --sh-press:  inset 1px 1px 4px rgba(0,0,0,.52), inset -1px -1px 4px rgba(44,49,59,.48);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.6; padding:28px 20px 80px;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{
+  font-family:inherit;font-size:13px;color:var(--text);
+  background:var(--inset);border:none;border-radius:12px;
+  padding:10px 14px;outline:none;width:100%;
+  box-shadow:var(--sh-inset-sm); transition:.18s;
+}
+input:focus,textarea:focus{ box-shadow:var(--sh-inset) }
+::selection{background:var(--accent);color:#10131a}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 新拟态工具类 ---------- */
+.raised{background:var(--elev);box-shadow:var(--sh-raised);border:none}
+.raised-sm{background:var(--elev);box-shadow:var(--sh-raised-sm);border:none}
+.raised-lg{background:var(--elev);box-shadow:var(--sh-raised-lg);border:none}
+.inset{background:var(--inset);box-shadow:var(--sh-inset);border:none}
+.press:active{box-shadow:var(--sh-press);transform:translateY(1px)}
+
+/* ---------- 风格说明条 ---------- */
+.stylebar{
+  max-width:960px;margin:0 auto 26px;display:flex;align-items:center;gap:14px;
+  padding:12px 18px;border-radius:var(--r-md);
+}
+.stylebar .tagchip{padding:4px 14px;border-radius:99px;background:var(--accent);color:#10131a;font-size:12px;font-weight:600;white-space:nowrap}
+.stylebar p{color:var(--muted);font-size:12px;flex:1}
+.stylebar b{color:var(--accent2)}
+
+/* ============ 页面容器 ============ */
+.page{max-width:960px;margin:0 auto 34px}
+.page-tag{
+  font-size:11px;color:var(--accent2);letter-spacing:2px;
+  margin:0 0 12px;display:flex;align-items:center;gap:10px;
+}
+.page-tag::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.screen{position:relative}
+
+/* ============ 用户选择页 ============ */
+.hero{text-align:center;padding:36px 0 8px;position:relative}
+.logo{
+  width:74px;height:74px;margin:0 auto 14px;border-radius:24px;
+  display:flex;align-items:center;justify-content:center;font-size:34px;
+  background:var(--elev);box-shadow:var(--sh-raised);
+}
+.hero h1{font-size:26px;font-weight:600;margin-bottom:6px;letter-spacing:.5px}
+.hero p{color:var(--muted);font-size:13px}
+.edit-all{position:absolute;top:18px;right:8px}
+.user-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:16px;margin-top:26px;
+}
+.user-card{
+  padding:22px 14px 18px;text-align:center;cursor:pointer;
+  border-radius:var(--r-lg);transition:.2s;position:relative;
+}
+.user-card:hover{background:var(--elev-hi);transform:translateY(-3px)}
+.user-card:active{box-shadow:var(--sh-press);transform:translateY(1px)}
+.avatar{
+  width:52px;height:52px;border-radius:50%;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:600;color:#10131a;
+  box-shadow:var(--sh-inset-sm);background:var(--accent);
+}
+.avatar.av2{background:var(--pink)}
+.avatar.av3{background:var(--green)}
+.avatar.av4{background:var(--amber)}
+.user-card .name{font-weight:500;font-size:14px}
+.user-card .cnt{color:var(--dim);font-size:12px;margin-top:2px}
+.del-user{
+  position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  color:var(--red);background:var(--elev);box-shadow:var(--sh-raised-sm);
+}
+.del-user:hover{box-shadow:var(--sh-inset-sm)}
+.add-user{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  color:var(--accent2);border-radius:var(--r-lg);padding:20px;font-size:14px;
+  cursor:pointer;background:var(--inset);box-shadow:var(--sh-inset-sm);transition:.2s;
+}
+.add-user:hover{box-shadow:var(--sh-inset)}
+
+/* ============ 主页面 ============ */
+.topbar{display:flex;align-items:center;gap:14px;padding:14px 20px;border-radius:var(--r-lg);margin-bottom:18px}
+.t-logo{font-size:22px}
+.topbar h1{font-size:17px;font-weight:600;flex:1}
+.who{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.who .dot{width:10px;height:10px;border-radius:50%;box-shadow:var(--sh-inset-sm)}
+.who .uname{color:var(--muted);font-size:13px;margin-right:4px}
+
+/* 按钮体系（新拟态） */
+.btn{
+  padding:8px 15px;border-radius:12px;font-size:13px;color:var(--muted);
+  background:var(--elev);box-shadow:var(--sh-raised-sm);transition:.16s;white-space:nowrap;
+}
+.btn:hover{color:var(--text);background:var(--elev-hi)}
+.btn:active{box-shadow:var(--sh-press);transform:translateY(1px)}
+.btn.primary{background:var(--accent);color:#10131a;font-weight:600}
+.btn.primary:hover{background:var(--accent2)}
+.btn.ghost{box-shadow:none;background:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--accent2)}
+.btn.sm{padding:5px 11px;font-size:12px;border-radius:10px}
+.btn.danger:hover{color:var(--red)}
+.btn.on{color:var(--amber)}
+
+/* 存入入口 */
+.paste-trigger{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:var(--r-md);padding:14px;margin-bottom:16px;cursor:pointer;
+  font-size:13px;color:var(--muted);transition:.18s;
+}
+.paste-trigger:hover{color:var(--accent2);background:var(--elev-hi)}
+.paste-trigger:active{box-shadow:var(--sh-press)}
+.paste-trigger .hint{font-size:11px;color:var(--dim)}
+
+/* 工具栏 */
+.toolbar{display:flex;gap:12px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:180px;position:relative}
+.search .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:13px;pointer-events:none}
+.search input{border-radius:var(--r-pill);padding-left:36px}
+.cols-sel{width:auto;padding:9px 26px 9px 14px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a90a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}
+.opt{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px;cursor:pointer;white-space:nowrap}
+/* 新拟态开关（凸起轨道 + 凹陷/填充指示） */
+.switch{width:38px;height:22px;border-radius:99px;background:var(--inset);box-shadow:var(--sh-inset-sm);position:relative;transition:.2s;flex-shrink:0}
+.switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--elev-hi);box-shadow:2px 2px 5px rgba(0,0,0,.5),-1px -1px 3px rgba(44,49,59,.5);transition:.2s}
+.switch.on{background:var(--accent)}
+.switch.on::after{left:19px;background:#f2f5ff}
+
+/* 类型分段控件（新拟态 segmented control：凹陷轨道 + 凸起选中项） */
+.typetab{display:inline-flex;gap:6px;padding:6px;border-radius:14px;background:var(--inset);box-shadow:var(--sh-inset-sm);margin-bottom:14px}
+.typetab .tt{
+  padding:6px 18px;border-radius:10px;font-size:13px;color:var(--muted);
+  cursor:pointer;transition:.18s;user-select:none;
+}
+.typetab .tt:hover{color:var(--text)}
+.typetab .tt.on{background:var(--elev);box-shadow:var(--sh-raised-sm);color:var(--accent2);font-weight:600}
+
+/* 标签栏 */
+.tagbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.tag{
+  font-size:12px;padding:5px 13px;border-radius:99px;cursor:pointer;color:var(--muted);
+  background:var(--elev);box-shadow:var(--sh-raised-sm);transition:.16s;
+}
+.tag:hover{color:var(--accent2)}
+.tag.on{background:var(--accent);color:#10131a;font-weight:600}
+.tag.off{opacity:.4}
+.tagbar .mgmt{margin-left:auto}
+.tag-pick{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tag-pick input{width:130px;min-width:130px;flex:0 0 auto;padding:6px 10px;font-size:12px;border-radius:99px}
+
+/* ============ 卡片列表 ============ */
+.list{display:grid;gap:16px;align-items:start;grid-template-columns:repeat(auto-fill,minmax(255px,1fr))}
+.clip-card{
+  padding:14px 16px;cursor:pointer;border-radius:var(--r-lg);transition:.2s;position:relative;min-width:0;
+  display:flex;flex-direction:column;gap:6px;
+}
+.clip-card:hover{background:var(--elev-hi);transform:translateY(-3px);box-shadow:var(--sh-raised-lg)}
+.clip-card:active{box-shadow:var(--sh-press);transform:translateY(1px)}
+.clip-card.pinned{box-shadow:1px 1px 3px rgba(0,0,0,.5),-1px -1px 3px rgba(44,49,59,.46),0 0 0 1.5px rgba(232,180,90,.55)}
+.clip-card .row1{display:flex;align-items:center;gap:8px}
+.clip-card .title{font-weight:500;font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.clip-card .preview{
+  color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:ui-monospace,Consolas,monospace;background:var(--inset);
+  border-radius:10px;padding:8px 10px;box-shadow:var(--sh-inset-sm);
+}
+.clip-card .preview.img-thumb{padding:8px;white-space:normal;text-align:center;background:var(--inset)}
+.clip-card .preview.img-thumb img{max-width:100%;max-height:92px;border-radius:8px;object-fit:contain;display:block;margin:0 auto}
+.clip-card .meta{display:flex;gap:8px;align-items:center;margin-top:2px;font-size:11px;color:var(--dim);flex-wrap:wrap}
+.clip-card .ops{margin-left:auto;display:flex;gap:5px}
+.op-btn{
+  width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:var(--muted);background:var(--elev);box-shadow:var(--sh-raised-sm);transition:.15s;
+}
+.op-btn:hover{color:var(--accent2);background:var(--elev-hi)}
+.op-btn:active{box-shadow:var(--sh-inset-sm)}
+.op-btn.star{color:var(--amber)}
+.op-btn.del:hover{color:var(--red)}
+
+/* 徽章 */
+.badge{font-size:11px;padding:2px 9px;border-radius:99px;background:var(--elev);box-shadow:var(--sh-raised-sm);color:var(--muted)}
+.badge.link{color:var(--blue)}
+.badge.file{color:var(--amber)}
+.badge.text{color:var(--green)}
+.badge.exp{color:var(--red)}
+.copycnt{color:var(--dim)}
+
+/* ============ 弹窗 ============ */
+.mask{
+  position:fixed;inset:0;background:rgba(10,12,16,.66);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;
+}
+.modal{
+  width:100%;max-width:450px;padding:24px;border-radius:var(--r-lg);
+  background:var(--elev);box-shadow:var(--sh-raised-lg);max-height:82vh;overflow-y:auto;
+}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:4px}
+.modal .sub{font-size:12px;color:var(--dim);margin-bottom:14px}
+.modal label{display:block;font-size:12px;color:var(--muted);margin:12px 0 6px}
+.modal textarea{min-height:70px;resize:vertical}
+.modal .form-row{display:flex;gap:8px;margin-top:14px}
+.modal .form-row .btn{flex:1}
+.dup-tip{
+  font-size:12px;color:var(--amber);background:var(--inset);
+  border-radius:10px;padding:8px 12px;margin-bottom:10px;line-height:1.5;box-shadow:var(--sh-inset-sm);
+}
+.dup-tip-main{font-weight:600}
+.dup-tip-sub{color:var(--muted);font-size:11px}
+.adv-box{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.adv-box input,.adv-box select{flex:1;min-width:120px}
+.dropzone{
+  border-radius:12px;padding:20px;text-align:center;color:var(--muted);font-size:13px;cursor:pointer;transition:.18s;
+  background:var(--inset);box-shadow:var(--sh-inset-sm);
+}
+.dropzone:hover{color:var(--accent2);box-shadow:var(--sh-inset)}
+.file-chip{
+  display:flex;align-items:center;gap:8px;background:var(--inset);border-radius:10px;
+  padding:7px 12px;font-size:12px;margin-top:8px;box-shadow:var(--sh-inset-sm);color:var(--text);
+}
+.file-chip .fname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ============ 组件展示区 ============ */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+.comp-panel{padding:18px;border-radius:var(--r-lg)}
+.comp-panel h4{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--accent2)}
+.comp-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.comp-row .lbl{width:64px;font-size:11px;color:var(--dim);flex-shrink:0}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.7);flex-direction:column;gap:2px}
+.swatch b{font-size:10px;color:#fff}
+.notes{margin-top:18px;padding:14px 18px;border-radius:var(--r-md)}
+.notes h4{font-size:13px;color:var(--accent2);margin-bottom:8px}
+.notes li{font-size:12px;color:var(--muted);margin:4px 0 4px 16px}
+</style>
+</head>
+<body>
+
+<!-- ===== 风格说明条 ===== -->
+<div class="stylebar raised">
+  <span class="tagchip">暗黑新拟态</span>
+  <p>迁移稿 · 基于 <b>Neumorphism</b> 风格：同色系「暗影+高光」双阴影浮雕、无边框、大圆角 16-18px、按压反馈。主强调色由粉色 <b>#ff9292</b> 切换为蓝紫 <b>#7f9dff</b>。以下按现有界面逐屏呈现，位置与间距已按新拟态密度重排。</p>
+</div>
+
+<!-- ================================================================
+     ① 用户选择页
+================================================================ -->
+<div class="page">
+  <div class="page-tag">01 · 用户选择页</div>
+  <div class="screen">
+    <div class="hero">
+      <button class="btn sm ghost edit-all" style="position:absolute;top:6px;right:4px">✎ 编辑</button>
+      <div class="logo">📋</div>
+      <h1>剪贴板</h1>
+      <p>点击进入 · 支持新建用户 · 数据彼此隔离</p>
+    </div>
+    <div class="user-grid">
+      <div class="user-card raised">
+        <div class="avatar">坤</div>
+        <div class="name">坤坤</div>
+        <div class="cnt">32 条内容</div>
+      </div>
+      <div class="user-card raised">
+        <button class="del-user">✕</button>
+        <div class="avatar av2">妈</div>
+        <div class="name">张妈妈</div>
+        <div class="cnt">12 条内容</div>
+      </div>
+      <div class="user-card raised">
+        <div class="avatar av3">黄</div>
+        <div class="name">小黄</div>
+        <div class="cnt">87 条内容</div>
+      </div>
+      <div class="user-card raised">
+        <div class="avatar av4">爸</div>
+        <div class="name">爸爸</div>
+        <div class="cnt">5 条内容</div>
+      </div>
+      <button class="add-user">＋ 新建用户</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     ② 主页面
+================================================================ -->
+<div class="page">
+  <div class="page-tag">02 · 主页面</div>
+  <div class="screen">
+
+    <!-- 顶栏 -->
+    <div class="topbar raised">
+      <span class="t-logo">📋</span>
+      <h1>剪贴板</h1>
+      <div class="who">
+        <span class="dot" style="background:var(--accent)"></span>
+        <span class="uname">坤坤</span>
+        <button class="btn sm ghost">密码</button>
+        <button class="btn sm ghost">数据管理</button>
+        <button class="btn sm">↻ 一键同步</button>
+        <button class="btn sm ghost">退出</button>
+      </div>
+    </div>
+
+    <!-- 存入入口 -->
+    <div class="paste-trigger raised">
+      <span>📥 存入内容</span>
+      <span class="hint">— 点击打开，复制内容后自动弹出</span>
+    </div>
+
+    <!-- 工具栏 -->
+    <div class="toolbar">
+      <div class="search">
+        <span class="icon">🔍</span>
+        <input type="search" placeholder="搜索内容 / 标题 / 标签…">
+      </div>
+      <select class="cols-sel inset">
+        <option>自适应</option><option>1 列</option><option>2 列</option><option>3 列</option>
+      </select>
+      <label class="opt"><span class="switch on"></span>含归档</label>
+    </div>
+
+    <!-- 类型分段控件 -->
+    <div class="typetab">
+      <span class="tt on">全部</span>
+      <span class="tt">文本</span>
+      <span class="tt">链接</span>
+      <span class="tt">文件</span>
+    </div>
+
+    <!-- 标签栏 -->
+    <div class="tagbar">
+      <span class="tag on">#设计</span>
+      <span class="tag">#素材</span>
+      <span class="tag">#待办</span>
+      <span class="tag">#灵感</span>
+      <span class="tag off">#归档</span>
+      <button class="btn sm ghost mgmt">⚙ 管理标签</button>
+    </div>
+
+    <!-- 卡片列表 -->
+    <div class="list">
+
+      <!-- 置顶链接卡 -->
+      <div class="clip-card raised pinned">
+        <div class="row1">
+          <span class="badge link">链接</span>
+          <span class="title">Figma 组件库规范文档</span>
+          <div class="ops">
+            <button class="op-btn star">★</button>
+            <button class="op-btn">↗</button>
+            <button class="op-btn">✎</button>
+            <button class="op-btn del">🗑</button>
+          </div>
+        </div>
+        <div class="preview">https://www.figma.com/community/file/123456</div>
+        <div class="meta"><span class="copycnt">复制 24 次</span><span class="badge">#设计</span><span class="badge">#素材</span><span>08-14 21:30</span></div>
+      </div>
+
+      <!-- 文本卡（JSON） -->
+      <div class="clip-card raised">
+        <div class="row1">
+          <span class="badge text">文本</span>
+          <span class="title">接口返回示例 JSON</span>
+          <div class="ops">
+            <button class="op-btn star" style="color:var(--dim)">☆</button>
+            <button class="op-btn">{}</button>
+            <button class="op-btn">✎</button>
+            <button class="op-btn del">🗑</button>
+          </div>
+        </div>
+        <div class="preview">{"name":"clipboard","version":1,...}</div>
+        <div class="meta"><span class="copycnt">复制 6 次</span><span class="badge">#开发</span><span>08-14 19:02</span></div>
+      </div>
+
+      <!-- 图片文件卡 -->
+      <div class="clip-card raised">
+        <div class="row1">
+          <span class="badge file">文件</span>
+          <span class="title">设计稿截图.png</span>
+          <div class="ops">
+            <button class="op-btn star" style="color:var(--dim)">☆</button>
+            <button class="op-btn">⇩</button>
+            <button class="op-btn">✎</button>
+            <button class="op-btn del">🗑</button>
+          </div>
+        </div>
+        <div class="preview img-thumb">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='140'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232730'/%3E%3Cstop offset='1' stop-color='%231c1f26'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='240' height='140' rx='10' fill='url(%23g)'/%3E%3Ccircle cx='120' cy='70' r='34' fill='none' stroke='%237f9dff' stroke-width='2' opacity='.8'/%3E%3Ccircle cx='120' cy='70' r='14' fill='%237f9dff' opacity='.5'/%3E%3C/svg%3E" alt="设计稿截图">
+        </div>
+        <div class="meta"><span class="copycnt">复制 3 次</span><span class="badge">#素材</span><span>342 KB · 08-14 18:40</span></div>
+      </div>
+
+      <!-- 普通文本卡 -->
+      <div class="clip-card raised">
+        <div class="row1">
+          <span class="badge text">文本</span>
+          <span class="title">明天下午三点评审会</span>
+          <div class="ops">
+            <button class="op-btn star" style="color:var(--dim)">☆</button>
+            <button class="op-btn">✎</button>
+            <button class="op-btn del">🗑</button>
+          </div>
+        </div>
+        <div class="preview">记得带上设计稿和竞品分析，会议室 A3...</div>
+        <div class="meta"><span class="copycnt">复制 1 次</span><span class="badge exp">12 小时后过期</span><span>08-14 17:15</span></div>
+      </div>
+
+      <!-- 归档卡（只读） -->
+      <div class="clip-card raised" style="opacity:.62">
+        <div class="row1">
+          <span class="badge text">文本</span>
+          <span class="title">旧版配色记录</span>
+          <div class="ops"><span class="badge">归档</span></div>
+        </div>
+        <div class="preview">主色 #ff9292 已废弃，详见设计规范 v2</div>
+        <div class="meta"><span class="copycnt">复制 9 次</span><span>07-02 10:00</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     ③ 存入弹窗（含重复提示 + 高级选项）
+================================================================ -->
+<div class="page">
+  <div class="page-tag">03 · 存入 / 编辑弹窗</div>
+  <div class="screen" style="display:flex;gap:16px;flex-wrap:wrap">
+
+    <div class="modal" style="position:static;flex:1;min-width:300px">
+      <h3>存入内容</h3>
+      <div class="sub">检测到新复制内容 · 已自动填入</div>
+      <div class="dup-tip">
+        <div class="dup-tip-main">⚠ 已有相同内容</div>
+        <div class="dup-tip-sub">检测到仓库中已存在相同文本，仍要存入吗？</div>
+      </div>
+      <label>内容</label>
+      <textarea placeholder="粘贴或输入内容…">https://www.figma.com/community/file/123456</textarea>
+      <div class="adv-box">
+        <input placeholder="别名 / 标题（可选）">
+        <select><option>过期：永久</option><option>1 小时</option><option>1 天</option><option>7 天</option><option>30 天</option></select>
+      </div>
+      <label>标签</label>
+      <div class="tag-pick">
+        <span class="tag on">#设计</span>
+        <span class="tag">#素材</span>
+        <input placeholder="新建标签…">
+      </div>
+      <div class="form-row">
+        <button class="btn">取消</button>
+        <button class="btn primary">存入</button>
+      </div>
+    </div>
+
+    <div class="modal" style="position:static;flex:1;min-width:300px">
+      <h3>编辑条目</h3>
+      <div class="sub">双击卡片或点 ✎ 进入</div>
+      <label>标题</label>
+      <input value="Figma 组件库规范文档">
+      <label>链接</label>
+      <input value="https://www.figma.com/community/file/123456">
+      <label>过期</label>
+      <select><option>永久保留</option><option>1 小时</option><option>1 天</option><option>7 天</option></select>
+      <label>标签</label>
+      <div class="tag-pick">
+        <span class="tag on">#设计</span>
+        <span class="tag on">#素材</span>
+        <input placeholder="新建标签…">
+      </div>
+      <div class="form-row">
+        <button class="btn danger" style="color:var(--red)">删除</button>
+        <button class="btn primary">保存</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================
+     ④ 组件与设计令牌
+================================================================ -->
+<div class="page">
+  <div class="page-tag">04 · 组件体系与设计令牌</div>
+  <div class="comp-grid">
+
+    <div class="comp-panel raised">
+      <h4>按钮</h4>
+      <div class="comp-row"><span class="lbl">主要</span><button class="btn primary">存入内容</button><button class="btn primary sm">保存</button></div>
+      <div class="comp-row"><span class="lbl">普通</span><button class="btn">一键同步</button><button class="btn sm">管理标签</button></div>
+      <div class="comp-row"><span class="lbl">幽灵</span><button class="btn ghost">密码</button><button class="btn ghost">退出</button><button class="btn ghost danger" style="color:var(--red)">删除用户</button></div>
+      <div class="comp-row"><span class="lbl">按压</span><button class="btn press primary">按下的感觉</button></div>
+    </div>
+
+    <div class="comp-panel raised">
+      <h4>输入 / 控件</h4>
+      <div class="comp-row"><span class="lbl">搜索</span><input placeholder="凹陷内嵌输入框（inset）" style="max-width:220px"></div>
+      <div class="comp-row"><span class="lbl">开关</span><label class="opt"><span class="switch on"></span>含归档</label><label class="opt"><span class="switch"></span>自动同步</label></div>
+      <div class="comp-row"><span class="lbl">下拉</span><select class="inset" style="width:auto;padding:8px 26px 8px 12px"><option>12 小时</option><option>1 小时</option><option>24 小时</option></select></div>
+      <div class="comp-row"><span class="lbl">徽章</span><span class="badge link">链接</span><span class="badge file">文件</span><span class="badge text">文本</span><span class="badge exp">已过期</span></div>
+    </div>
+
+    <div class="comp-panel raised" style="grid-column:1/-1">
+      <h4>色板（新拟态令牌）</h4>
+      <div class="swatches">
+        <div class="swatch" style="background:#1c1f26"><b>bg</b>#1c1f26</div>
+        <div class="swatch" style="background:#232730"><b>elev</b>#232730</div>
+        <div class="swatch" style="background:#191c22"><b>inset</b>#191c22</div>
+        <div class="swatch" style="background:#2c313b"><b>border</b>#2c313b</div>
+        <div class="swatch" style="background:#d3d8e2;color:#1c1f26"><b>text</b>#d3d8e2</div>
+        <div class="swatch" style="background:#8a90a0"><b>dim</b>#8a90a0</div>
+        <div class="swatch" style="background:#7f9dff"><b>accent</b>#7f9dff</div>
+        <div class="swatch" style="background:#a3b9ff"><b>acc2</b>#a3b9ff</div>
+        <div class="swatch" style="background:#e8b45a"><b>amber</b>#e8b45a</div>
+        <div class="swatch" style="background:#8fd6a8"><b>green</b>#8fd6a8</div>
+        <div class="swatch" style="background:#e07a7a"><b>red</b>#e07a7a</div>
+      </div>
+      <div style="margin-top:14px;font-size:11px;color:var(--dim)">
+        双阴影公式（v5 全偏移 1px）：<code>box-shadow: 1px 1px 3px rgba(0,0,0,.5), -1px -1px 3px rgba(44,49,59,.46)</code>（凸起）<br>
+        弹窗/hover（lg）：<code>1px 1px 5px rgba(0,0,0,.52), -1px -1px 5px rgba(44,49,59,.48)</code>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="notes inset" style="max-width:960px;margin:0 auto">
+  <h4>位置与间距调整说明（相对现有界面）</h4>
+  <ul>
+    <li><b>容器加宽</b>：720px → 960px 居中（新拟态浮雕需要呼吸感，卡片网格更舒展）</li>
+    <li><b>类型 Tab 改分段控件</b>：独立描边胶囊 → 凹陷轨道 + 凸起选中项（新拟态标志性交互）</li>
+    <li><b>搜索框改胶囊内嵌</b>：描边方框 → 凹陷 pill + 放大镜图标，语义=「可输入区域」</li>
+    <li><b>卡片间距加大</b>：10px → 16px，hover 抬升 3px + 阴影加深（浮雕浮起感）</li>
+    <li><b>顶栏改整条浮雕面板</b>：按钮从描边 ghost 改为凸起小按钮，按压回弹</li>
+    <li><b>存入入口</b>：虚线框 → 凸起条 + 副文字提示，按压凹陷</li>
+    <li><b>主强调色切换</b>：#ff9292 粉 → #7f9dff 蓝紫（风格手册新拟态标准色）</li>
+    <li><b>置顶卡片</b>：整卡琥珀描边 → 仅保留琥珀双阴影光晕，弱化视觉噪音</li>
+    <li><b>无边框原则</b>：全界面取消 1px 描边，轮廓全部由双阴影定义</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!-- Controls/SyncPickerDialog.xaml - 首次同步：连服务器 → 枚举远端账号 → 选一个拉回（本地单账号切换）
+     免"新建/猜测账号名"的登录式流程：服务器凭据只填一次，账号从远端真实存在的里挑。 -->
+<UserControl x:Class="ClipboardExe.Controls.SyncPickerDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="460">
+    <Border Style="{StaticResource ModalCard}">
+        <StackPanel>
+            <DockPanel Style="{StaticResource ModalHead}">
+                <TextBlock Text="选择要同步的账号" FontSize="16" FontWeight="Medium" VerticalAlignment="Center"/>
+            </DockPanel>
+
+            <TextBlock Text="输入服务器信息并「列出账号」，从服务器上已存在的远端账号中选一个同步到本机（本机仍为单账号，所选即后续使用的账号）。"
+                       FontSize="12" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,0,0,14"/>
+
+            <!-- 服务器凭据（已保存则预填；账号无需手填，由枚举给出） -->
+            <TextBlock Text="服务器地址" Foreground="{StaticResource MutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+            <TextBox x:Name="UrlBox" Style="{StaticResource EditInput}" Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,6,0">
+                    <TextBlock Text="用户名" Foreground="{StaticResource MutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+                    <TextBox x:Name="UserBox" Style="{StaticResource EditInput}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                    <TextBlock Text="密码" Foreground="{StaticResource MutedBrush}" FontSize="12" Margin="0,0,0,4"/>
+                    <PasswordBox x:Name="PwdBox" Style="{StaticResource EditPassword}"/>
+                </StackPanel>
+            </Grid>
+
+            <Button x:Name="ListBtn" Content="连接并列出账号" Style="{StaticResource BtnGhost}" HorizontalAlignment="Stretch"
+                    Margin="0,0,0,12" Click="ListBtn_Click"/>
+
+            <!-- 账号列表（单选，滚动；枚举后填充） -->
+            <Border x:Name="ListCard" Style="{StaticResource SecCard}" Padding="0" Visibility="Collapsed">
+                <StackPanel>
+                    <TextBlock x:Name="ListHead" FontSize="12" Foreground="{StaticResource MutedBrush}"
+                               Padding="12,10,12,6" TextWrapping="Wrap"/>
+                    <ScrollViewer MaxHeight="210" VerticalScrollBarVisibility="Auto" Padding="8,0,8,8">
+                        <StackPanel x:Name="AcctList"/>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <Border x:Name="StatusCard" Background="{StaticResource InsetBrush}" CornerRadius="{StaticResource RadiusBtn}"
+                    Padding="12,9" Margin="0,10,0,0" Visibility="Collapsed">
+                <TextBlock x:Name="StatusText" Foreground="{StaticResource MutedBrush}" FontSize="12" TextWrapping="Wrap"/>
+            </Border>
+
+            <Grid Margin="0,16,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="SyncBtn" Content="同步所选账号" Grid.Column="0" Style="{StaticResource BtnPrimary}"
+                        MinWidth="150" HorizontalAlignment="Stretch" Margin="0,0,10,0"
+                        IsEnabled="False" Click="SyncBtn_Click" ToolTip="把所选远端账号数据同步下来（本地空则拉回成该账号数据）"/>
+                <Button Content="关闭" Grid.Column="1" Style="{StaticResource BtnClose}" MinWidth="88" Click="Close_Click"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

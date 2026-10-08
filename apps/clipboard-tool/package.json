@@ -1,0 +1,20 @@
+{
+  "name": "clipboard-tool",
+  "version": "0.7.6",
+  "private": true,
+  "description": "多用户剪贴板管理工具：万能入口粘贴即存、智能排序、拼音搜索、标签体系、WebDAV 备份同步（墓碑机制/定时自动同步）、Node 零依赖",
+  "type": "module",
+  "engines": {
+    "node": ">=22.7"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "smoke": "node scripts/smoke-test.mjs",
+    "test:webdav": "node scripts/test-webdav-sync.mjs",
+    "test:auto-sync": "node scripts/test-auto-sync.mjs",
+    "test:diff": "dotnet build clipboard-exe/tools/difftest/difftest.csproj -c Release && node tests/diff-rules.mjs",
+    "test": "npm run smoke && npm run test:webdav && npm run test:auto-sync && npm run test:diff"
+  },
+  "keywords": ["clipboard", "剪贴板", "tools-center"],
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>clipprobe</AssemblyName>
+    <RootNamespace>ClipProbe</RootNamespace>
+  </PropertyGroup>
+
+  <!-- 与生产项目同款配置：移除 WinForms/Drawing 全局隐式 using，否则 Application/Rectangle/DataObject 与 WPF 二义性 -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <!-- 直接编译生产源文件：测的是产品代码本身，不是复制品（避免"测的与跑的不是同一份"） -->
+  <ItemGroup>
+    <Compile Include="..\..\Services\ClipboardNative.cs" Link="prod\ClipboardNative.cs" />
+    <Compile Include="..\..\Services\ClipboardWatcher.cs" Link="prod\ClipboardWatcher.cs" />
+    <Compile Include="..\..\Services\ClipboardHelper.cs" Link="prod\ClipboardHelper.cs" />
+    <Compile Include="..\..\Services\AppLog.cs" Link="prod\AppLog.cs" />
+  </ItemGroup>
+</Project>

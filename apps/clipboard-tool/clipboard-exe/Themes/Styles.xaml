@@ -1,0 +1,1037 @@
+﻿<!-- Themes/Styles.xaml - 控件样式库（对齐 Web 版 index.html CSS 类体系，规范见 UI_GUIDE.md）
+     组织：层1 按钮家族 / 存入 / 置顶 / 输入 / 搜索 / 标签 / 徽章 / 开关 / 分段 → 层2 滚动条
+     铁律：圆角/颜色一律取 Colors.xaml 令牌；阴影走 NeuBorder；样式 BasedOn 复用；内容进圆角 Border 内 -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ClipboardExe.Controls">
+
+    <!-- ================================================================
+         层1 · 按钮家族（对齐 .btn / .btn.primary / .btn.ghost / .btn.sm / .btn.danger）
+         ================================================================ -->
+    <Style x:Key="BtnBase" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ElevBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="15,8"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource RadiusBtn}"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <TranslateTransform/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        </Trigger>
+                        <!-- 对齐 Web .btn:active：颜色不变 + translateY(1px) -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnPrimary" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource Accent2Brush}"/>
+                <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BtnGhost" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BtnGhostSm" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="11,5"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtnSm}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BtnDanger" TargetType="Button" BasedOn="{StaticResource BtnGhostSm}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource RedBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- 存入按钮（.store-btn：金色 pill + hover amber） -->
+    <Style x:Key="StoreBtn" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Padding" Value="22,10"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <!-- PillBorder.Pill 自动钳制 CornerRadius 为 min(99, w/2, h/2)，
+                         防止窄元素渲染成椭圆（而非真正的 pill 两端半圆） -->
+                    <Border x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            local:PillBorder.Pill="99"
+                            ClipToBounds="True"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <TranslateTransform/>
+                        </Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AmberBrush}"/>
+                        </Trigger>
+                        <!-- 对齐 Web .store-btn:active：translateY(1px) -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 置顶切换按钮（who 区小号；开=金色，唯一新增）
+         ClipToBounds=True：IsChecked 时 AccentBrush 金底沿矩形 bbox 渲染会溢出圆角，裁剪到圆角内才不出现"圆角见方" -->
+    <Style x:Key="BtnPin" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="11,5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtnSm}" ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层1 · 输入（.search 搜索 pill / input 通用内嵌）
+         ================================================================ -->
+    <Style x:Key="SearchBox" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            local:PillBorder.Pill="99"
+                            ClipToBounds="True">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="20,10,20,10" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="PH" Text="{TemplateBinding Tag}"
+                                       Foreground="{StaticResource DimBrush}" FontSize="14"
+                                       Margin="20,0" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="PH" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="IsKeyboardFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Cursor" Value="IBeam"/> <!-- 弹窗根已设 SizeAll（整卡可拖提示），输入框必须覆盖回 IBeam，防光标误导 -->
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12,9"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource RadiusBtn}"
+                            ClipToBounds="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="bd" Property="BorderThickness" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层1 · 标签 / 徽章 / 开关
+         ================================================================ -->
+    <!-- 编辑弹窗输入框（内容 / 别名）：分区卡为 Inset(#141414)，默认 TextBox 同为 Inset 导致无对比、看不见。
+         改用 Bg(#1A1A1A) 填充 + 1px BorderBrush 常驻描边，与卡片底拉开层次；聚焦金边；Tag 作占位符。 -->
+    <Style x:Key="EditInput" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource BgBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Cursor" Value="IBeam"/> <!-- 弹窗根 SizeAll 继承覆盖：输入框必须 IBeam -->
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="12,9"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource RadiusBtn}" ClipToBounds="True">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                            <TextBlock x:Name="PH" Text="{TemplateBinding Tag}" Visibility="Collapsed"
+                                       Foreground="{StaticResource DimBrush}" FontSize="{TemplateBinding FontSize}"
+                                       Margin="{TemplateBinding Padding}" IsHitTestVisible="False" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="IsKeyboardFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PH" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="PH" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 密码输入框（与 EditInput 同视觉：Bg 底 / 1px 边框 / r-btn / 聚焦金边） -->
+    <Style x:Key="EditPassword" TargetType="PasswordBox">
+        <Setter Property="Background" Value="{StaticResource BgBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Cursor" Value="IBeam"/> <!-- 弹窗根 SizeAll 继承覆盖：输入框必须 IBeam -->
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="12,9"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource RadiusBtn}" ClipToBounds="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 标签 chip（.tag：胶囊 elev/raised-sm；Tag="on"=金底深字600；Tag="off"=半透明） -->
+    <Style x:Key="TagChip" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ElevBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="11,3"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="on">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="off">
+                            <Setter Property="Opacity" Value="0.45"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 徽章（.badge：胶囊小徽章；变体 BadgeLink/File/Text/Exp 只换前景色）
+         用 ContentControl 封装（TextBlock 无 Template），用法：<ContentControl Style="{StaticResource BadgeLink}" Content="链接"/>
+         ⚠️ 不用 RadiusPill(99): 16px 高元素上 WPF 把 99 clamp 到 h/2 ≈ 8,左右两端近半圆 + 顶底直线 → 视觉呈"叶子/梭形",不是用户期望的圆角矩形。改用 RadiusSt=6 -->
+    <Style x:Key="Badge" TargetType="ContentControl">
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="{StaticResource ElevBrush}" CornerRadius="{StaticResource RadiusSt}" Padding="9,2" ClipToBounds="True">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BadgeLink" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
+    </Style>
+    <Style x:Key="BadgeFile" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{StaticResource AmberBrush}"/>
+    </Style>
+    <Style x:Key="BadgeText" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{StaticResource GreenBrush}"/>
+    </Style>
+    <Style x:Key="BadgeImage" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{StaticResource PurpleBrush}"/>
+    </Style>
+    <Style x:Key="BadgeExp" TargetType="ContentControl" BasedOn="{StaticResource Badge}">
+        <Setter Property="Foreground" Value="{StaticResource RedBrush}"/>
+    </Style>
+
+    <!-- 新拟态开关（.opt input[type=checkbox]：内凹轨道+凸起滑块；选中=金晕轨道+金滑块+描边） -->
+    <Style x:Key="OptSwitch" TargetType="ToggleButton">
+        <Setter Property="Width" Value="38"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid Background="Transparent">
+                        <Border x:Name="Track"
+                                Background="{StaticResource InsetBrush}"
+                                BorderBrush="Transparent" BorderThickness="1"
+                                CornerRadius="{StaticResource RadiusPill}"/>
+                        <Border x:Name="Knob" Width="16" Height="16" CornerRadius="{StaticResource RadiusIcon}"
+                                Background="{StaticResource ElevHiBrush}"
+                                HorizontalAlignment="Left" Margin="3,0,0,0"
+                                Effect="{StaticResource ShadowSwitchKnob}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Track" Property="Background" Value="{StaticResource AccentGlowBrush}"/>
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{StaticResource AccentRingBrush}"/>
+                            <Setter TargetName="Knob" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="Knob" Property="Margin" Value="0,0,3,0"/>
+                            <Setter TargetName="Knob" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Knob" Property="Effect" Value="{StaticResource ShadowSwitchKnobOn}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层1 · 类型分段（.typetab 凹陷轨道 + .tt 凸起选中）
+         ================================================================ -->
+    <Style x:Key="Typetab" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMd}"/>
+        <Setter Property="Padding" Value="6"/>
+    </Style>
+
+    <Style x:Key="TtBtn" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="18,6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtnSm}" ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="on">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevBrush}"/>
+                            <Setter TargetName="bd" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="1" Opacity="0.45" Direction="135"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层2 · 滚动条（细条默认样式：对齐 Web ::-webkit-scrollbar 主 9px/卡内 .pv 4px 的超细感，
+               统一为 2px 极细条 + 小圆角（RadiusScroll 3，非全圆胶囊）+ thumb hover 变亮）
+               竖向(卡片墙/弹窗)与横向(标签栏)同粗细 2px——用户定稿：标签栏横向滚动条不再偏粗(原6px)，
+               与右侧竖向滚动条 UI 一致。
+         ================================================================ -->
+    <Style TargetType="ScrollBar">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Width" Value="2"/>
+        <Setter Property="MinWidth" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Background="Transparent">
+                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="False"/>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="False"/>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb>
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Border x:Name="tb" Background="{StaticResource BorderBrush}"
+                                                    CornerRadius="{StaticResource RadiusScroll}" Margin="0"/>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="tb" Property="Background" Value="{StaticResource DimBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="2"/>
+                <Setter Property="MinHeight" Value="2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：类型分段 RadioButton（真绑定选中态，替代 Tag 字符串约定）
+         ================================================================ -->
+    <!-- 对齐 .typetab .tt：凹陷轨道内凸起选中（视觉同 TtBtn，但 IsChecked 驱动——契约 #3） -->
+    <Style x:Key="TtRadio" TargetType="RadioButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Padding" Value="18,6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtnSm}" ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevBrush}"/>
+                            <Setter TargetName="bd" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="Black" BlurRadius="3" ShadowDepth="1" Opacity="0.45" Direction="135"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：深色 ComboBox（默认系统模板是浅色，必须覆盖）
+         ================================================================ -->
+    <Style x:Key="DarkCombo" TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Padding" Value="13,10"/><!-- .paste-adv .adv-row select padding:10px 13px -->
+        <!-- 圆角默认 r-10（存入弹窗）；编辑弹窗用 local:Combo.Radius="{StaticResource RadiusCombo}"(r-9) 覆盖 -->
+        <Setter Property="local:Combo.Radius" Value="{StaticResource RadiusBtnSm}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{Binding Path=(local:Combo.Radius), RelativeSource={RelativeSource TemplatedParent}}"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <ContentPresenter x:Name="content" Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,16,0"/>
+                                <Path x:Name="arrow" Data="M0,0 L4,4 L8,0" Stroke="{StaticResource MutedBrush}" StrokeThickness="1.5"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <Path.RenderTransform>
+                                        <RotateTransform x:Name="arrowRot" Angle="0"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Border>
+                        <ToggleButton x:Name="toggle" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Focusable="False" ClickMode="Press" Background="Transparent" Opacity="0" />
+                        <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True"
+                               Focusable="False" PopupAnimation="Slide" PlacementTarget="{Binding ElementName=bd}" Margin="0,4,0,0">
+                            <Border Background="{StaticResource ElevBrush}" CornerRadius="{StaticResource RadiusBtnSm}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                                    MinWidth="{TemplateBinding ActualWidth}" MaxHeight="280" Padding="3">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Opacity="0.5" Direction="270"/>
+                                </Border.Effect>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                        </Trigger>
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="arrowRot" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="arrowRot" Storyboard.TargetProperty="Angle" To="0" Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="MinHeight" Value="30"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="11,6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border x:Name="bd" Background="Transparent" CornerRadius="6" Margin="3,2" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentSoftBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource AccentTextBrush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsHighlighted" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentHiBrush}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：弹窗（modal）公共件 —— 遮罩/卡片/标题/操作行
+         ================================================================ -->
+    <!-- 弹窗遮罩（对齐 .mask：rgba(10,12,16,.66) + blur）——每个 Dialog Window 的根 Grid 用 -->
+    <Style x:Key="ModalMask" TargetType="Grid">
+        <Setter Property="Background" Value="#A80A0C10"/>
+    </Style>
+
+    <!-- 弹窗卡片（对齐 .modal：elev + r-lg + raised-lg 阴影；内容 padding 24）
+         BorderClip.ClipToRadius=True：WPF DropShadowEffect 永远按元素矩形 bbox 渲染阴影，圆角 Border 的阴影外缘呈方形（深色主题下肉眼可见"圆角处见方形"）。
+         Clip=RectangleGeometry(RadiusX/Y) 把 Effect 阴影一并裁到圆角矩形内，彻底消除方形外缘（阴影贴边换圆角干净）。
+         BorderBrush=CardEdgeBrush（1px rgba(white,.2)）：弹窗卡片在深色主题下 ElevBrush 与窗口 BgBrush 边界发糊,1px 半透明白描边兜底边界 -->
+    <Style x:Key="ModalCard" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource ElevBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CardEdgeBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusLg}"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="local:BorderClip.ClipToRadius" Value="True"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" BlurRadius="22" ShadowDepth="4" Opacity="0.6" Direction="270"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 弹窗标题行（图标 + 标题）；Cursor=SizeAll：整行可拖提示。实际拖动区 = 整卡非交互区（ModalHost 系统级拖动，
+         光标由 ModalHost.Show 设 content.Cursor=SizeAll 覆盖全卡；交互控件各自覆盖：TextBox IBeam / 按钮 Hand） -->
+    <Style x:Key="ModalHead" TargetType="DockPanel">
+        <Setter Property="Margin" Value="0,0,0,14"/>
+        <Setter Property="Cursor" Value="SizeAll"/>
+    </Style>
+
+    <!-- 弹窗操作行（.paste-actions：等宽按钮） -->
+    <Style x:Key="ModalActions" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Margin" Value="0,16,0,0"/>
+    </Style>
+
+    <!-- .btn-close：inset 底 muted 字小按钮（弹窗关闭/归档） -->
+    <Style x:Key="BtnClose" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="Padding" Value="16,11"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtn}" ClipToBounds="True"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform><TranslateTransform/></Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="RenderTransform">
+                                <Setter.Value><TranslateTransform Y="1"/></Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- .btn-file：inset 底 muted 字（存入弹窗"选择文件"） -->
+    <Style x:Key="BtnFile" TargetType="Button" BasedOn="{StaticResource BtnClose}">
+        <Setter Property="MinWidth" Value="112"/>
+    </Style>
+
+    <!-- 弹窗分区卡片（.edit-sec：inset 底 r-md） -->
+    <Style x:Key="SecCard" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMd}"/>
+        <Setter Property="Padding" Value="13,16"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
+    </Style>
+
+    <!-- 分区标题行（.edit-sec-t：序号块 + 标题 + 右侧 hint） -->
+    <Style x:Key="SecTitle" TargetType="DockPanel">
+        <Setter Property="Margin" Value="0,0,0,9"/>
+    </Style>
+
+    <!-- 重复提示框（.edit-dup / .paste-dup：amber 描边底） -->
+    <Style x:Key="DupTip" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource AmberWarnBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource AmberSoftBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusBtn}"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="Margin" Value="0,0,0,12"/>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：类型徽章（paste-badge / edit-type 同视觉：soft 底 + 彩字）
+         ================================================================ -->
+    <Style x:Key="TypeBadge" TargetType="ContentControl">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border x:Name="bd" Background="{StaticResource InsetBrush}" CornerRadius="{StaticResource RadiusIconSm}" Padding="11,3" ClipToBounds="True">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TypeBadgeText" TargetType="ContentControl" BasedOn="{StaticResource TypeBadge}">
+        <Setter Property="Background" Value="{StaticResource GreenSoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource GreenBrush}"/>
+    </Style>
+    <Style x:Key="TypeBadgeLink" TargetType="ContentControl" BasedOn="{StaticResource TypeBadge}">
+        <Setter Property="Background" Value="{StaticResource Accent2SoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Accent2BrightBrush}"/>
+    </Style>
+    <Style x:Key="TypeBadgeFile" TargetType="ContentControl" BasedOn="{StaticResource TypeBadge}">
+        <Setter Property="Background" Value="{StaticResource AmberSoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AmberBrush}"/>
+    </Style>
+    <Style x:Key="TypeBadgeRich" TargetType="ContentControl" BasedOn="{StaticResource TypeBadge}">
+        <Setter Property="Background" Value="{StaticResource BlueSoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource BlueBrush}"/>
+    </Style>
+
+    <!-- 状态小徽章（.status .st：pin 金 / exp 砖红 / arch 灰） -->
+    <Style x:Key="StatusSt" TargetType="ContentControl">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusSt}" Padding="8,2" ClipToBounds="True">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="StatusStPin" TargetType="ContentControl" BasedOn="{StaticResource StatusSt}">
+        <Setter Property="Background" Value="{StaticResource AmberSoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource AmberBrush}"/>
+    </Style>
+    <Style x:Key="StatusStExp" TargetType="ContentControl" BasedOn="{StaticResource StatusSt}">
+        <Setter Property="Background" Value="{StaticResource Accent2SoftBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource Accent2BrightBrush}"/>
+    </Style>
+    <Style x:Key="StatusStArch" TargetType="ContentControl" BasedOn="{StaticResource StatusSt}">
+        <Setter Property="Background" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：卡片 ops 小图标钮（.ops .b：26x26 方形 inset 底）与 meta #tag
+         ================================================================ -->
+    <Style x:Key="OpsIconBtn" TargetType="Button">
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusIcon}" ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource ElevHiBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="OpsIconBtnDel" TargetType="Button" BasedOn="{StaticResource OpsIconBtn}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource RedBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- 批量模式勾选框（✕ 原位替换：26x26 与 OpsIconBtn 同几何同 Margin → StatusSt/标题/行高不变,卡片布局零位移。
+         未选：Transparent+Muted 1.5 描边 / hover：金描边+金 16% 底 / 选中：Accent 金底 + ✓ 深字——视觉状态由 CardView 代码驱动） -->
+    <Style x:Key="SelChkBtn" TargetType="Button">
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource RadiusIcon}" ClipToBounds="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AccentSoftBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- meta 区 #tag 小胶囊（点击过滤）
+         ⚠️ 不用 RadiusPill(99): 16px 高元素 + Pill 在 WPF clamp 到 h/2 ≈ 8 后呈"叶子/梭形"。改用 RadiusSt=6 与 StatusSt/Badge 徽章家族视觉统一 -->
+    <Style x:Key="MetaTag" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ElevBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource DimBrush}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Padding" Value="7,2"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusSt}" Padding="{TemplateBinding Padding}" ClipToBounds="True">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 标签选择器 chip（.tag-pick .tag：inset 底；选中金底深字）。圆角用 RadiusBtn 与其他输入框/按钮一致（非胶囊） -->
+    <Style x:Key="TagPickChip" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Padding" Value="12,4"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusBtn}" Padding="{TemplateBinding Padding}" ClipToBounds="True">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Accent2Brush}"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="on">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AmberSoftHiBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource AmberBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 空状态（.empty：dim 13px 居中） -->
+    <Style x:Key="EmptyText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource DimBrush}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,48"/>
+    </Style>
+
+    <!-- ================================================================
+         层3 · M3a 增补：卡片内容区公共件 —— inset 内嵌面板 / 链接主按钮
+         ================================================================ -->
+    <!-- .pv / .url / .imgwrap 通用内嵌面板：inset 底 + r-10（卡片 body 内容区共用） -->
+    <Style x:Key="InsetPanel" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusBtnSm}"/>
+    </Style>
+
+    <!-- 全局 ToolTip：深色圆角矩形（覆盖 WPF 系统默认的白底/直角/气泡阴影——所有按钮 hover 都受惠）
+         ⚠️ CornerRadius 用绝对 6,不用 RadiusPill=99:99 在 16~22px 高元素上 WPF clamp 到 h/2 ≈ 8-11,
+         视觉呈"叶子/梭形/长方形"——用户期望的是明显圆角矩形(6~8)。 -->
+    <Style TargetType="ToolTip">
+        <Setter Property="Background" Value="{StaticResource InsetBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Padding" Value="9,5"/>
+        <Setter Property="HasDropShadow" Value="False"/>
+        <Setter Property="Placement" Value="Mouse"/>
+        <Setter Property="HorizontalOffset" Value="0"/>
+        <Setter Property="VerticalOffset" Value="-2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6"
+                            ClipToBounds="True"
+                            Padding="{TemplateBinding Padding}">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- .main-btn：链接卡金色主按钮（accent 底 + bg 深字 + pill + raised-sm；hover amber） -->
+    <Style x:Key="MainLinkBtn" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource BgBrush}"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Padding" Value="15,6"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="{StaticResource RadiusPill}"
+                            local:PillBorder.Pill="99" ClipToBounds="True"
+                            RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform><TranslateTransform/></Border.RenderTransform>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource AmberBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bd" Property="RenderTransform">
+                                <Setter.Value><TranslateTransform Y="1"/></Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
