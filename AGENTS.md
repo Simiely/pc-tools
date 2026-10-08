@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-10-08（commit `<本提交>`）索引表新增「Blender 生态（PC 端）」`blender-render-console`
+> 📌 **文档基线**：2026-10-08（commit `e3df98f`）索引表新增「Blender 生态（PC 端）」`blender-render-console`
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
