@@ -1,5 +1,11 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-09 · 索引新增 TopoGun3-Chinese-Localization
+
+- 索引「🧰 本地小工具」新增 [`TopoGun3-Chinese-Localization`](https://github.com/Simiely/TopoGun3-Chinese-Localization)
+  —— TopoGun 3 简体中文汉化包（PC 端安装）
+- 「相关仓库」区补充新索引入口：[`design-tools`](https://github.com/Simiely/design-tools) · [`mobile-apps`](https://github.com/Simiely/mobile-apps) · [`tech-guides`](https://github.com/Simiely/tech-guides)
+
 ## 仓库 · 2026-10-09 · 索引新增 gh-fetcher
 
 - 索引新增 [`gh-fetcher`](https://github.com/Simiely/gh-fetcher)（v1.0.0）—— GitHub 仓库 / Release 浏览下载器
