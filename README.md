@@ -22,6 +22,7 @@
 | **[`ExplorerBlurMica-whitebar-fix`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix)** | 修 ExplorerBlurMica 拉起下载目录时的底部白条 | 脚本 | [`v1.0.0`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix/releases/latest) | 2026-07-12 |
 | **[`windows-explorer-refresh-fix`](https://github.com/Simiely/windows-explorer-refresh-fix)** | 修下载后资源管理器不自动刷新（要按 F5） | 脚本 | [`v1.0.0`](https://github.com/Simiely/windows-explorer-refresh-fix/releases/latest) | 2026-07-11 |
 | **[`edge-multi-account-cookie`](https://github.com/Simiely/edge-multi-account-cookie)** | Edge 多账号 Cookie 切换 | JavaScript | [`v2.11.11`](https://github.com/Simiely/edge-multi-account-cookie/releases/latest) | 2026-08-24 |
+| `MultiSwitch` 🔒 | TRAE Work 多账号安全切换：只替换登录态小文件、保护 3.5GB `ModularData` 环境不重下（另含积分查询 + 自动签到两套子程序） | Python · tkinter | `v1.9.3` | 2026-10-08 |
 
 ### 🧰 本地小工具
 
@@ -29,6 +30,7 @@
 |---|---|---|---|---|
 | **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
 | **[`TopoGun3-Chinese-Localization`](https://github.com/Simiely/TopoGun3-Chinese-Localization)** | TopoGun 3 简体中文汉化包（GLSL 着色器 + PowerShell 安装脚本） | GLSL · PS1 | — | 2026-08-03 |
+| **[`carselection`](https://github.com/Simiely/carselection)** 🔗[页面](https://simiely.github.io/carselection/) | 汽车选购辅助筛选：23 大类 / 117 题问卷 → 生成结构化提示词供 AI 推荐车型 | HTML · JS（零依赖） | — | 2026-07-04 |
 
 ### 🎬 3D / 渲染生态（PC 端）
 
@@ -47,6 +49,7 @@
 - 本仓库只负责**索引与导航**，新增工具＝在这里加一行；
 - **为什么 PC 工具不做 monorepo、也不归档**：工具靠 **GitHub Releases 分发 exe**、**发版频繁**（单个工具 10~12 个 Release），而仓库一旦归档就**完全只读、Releases 也发不了**，所以统一为「各仓库独立 + 本仓做索引」。
   （**插件类不同**：插件小、发版少 → 由总管仓库装代码、成员仓归档，见 [`ae-tools`](https://github.com/Simiely/ae-tools) · [`blender-addons`](https://github.com/Simiely/blender-addons) · [`c4d-tools`](https://github.com/Simiely/c4d-tools)。）
+- 🔒 标记的是**私有仓库** —— 条目保留便于本人一览，但不提供对外链接（外部访问会 404）。
 - 文档规范遵循 [knowledge-base 单项目规范](https://github.com/Simiely/knowledge-base)。
 
 ## 相关仓库
