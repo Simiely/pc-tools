@@ -28,6 +28,7 @@
 | 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
 | **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
+| **[`TopoGun3-Chinese-Localization`](https://github.com/Simiely/TopoGun3-Chinese-Localization)** | TopoGun 3 简体中文汉化包（GLSL 着色器 + PowerShell 安装脚本） | GLSL · PS1 | — | 2026-08-03 |
 
 ### 🎬 3D / 渲染生态（PC 端）
 
