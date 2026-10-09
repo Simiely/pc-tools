@@ -52,3 +52,4 @@
 ## 相关仓库
 
 - 其它领域的总管仓库：[`ae-tools`](https://github.com/Simiely/ae-tools)（After Effects）· [`blender-addons`](https://github.com/Simiely/blender-addons)（Blender 插件）· [`c4d-tools`](https://github.com/Simiely/c4d-tools)（Cinema 4D 插件）
+- 其它索引仓库：[`design-tools`](https://github.com/Simiely/design-tools)（设计 / 3D 工具）· [`mobile-apps`](https://github.com/Simiely/mobile-apps)（移动端 App）· [`tech-guides`](https://github.com/Simiely/tech-guides)（技术文档 / 教程）
