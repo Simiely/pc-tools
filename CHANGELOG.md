@@ -1,5 +1,13 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-09 · 索引新增 MultiSwitch + carselection
+
+- 「🔧 系统修复」新增 **`MultiSwitch`**（🔒 私有）—— TRAE Work 多账号安全切换（Python · tkinter，`v1.9.3`，30 个 Release）；
+  私有仓按惯例以 **`私藏仓库`** 纯文本标注、不给对外链接
+- 「🧰 本地小工具」新增 **[`carselection`](https://github.com/Simiely/carselection)**（🔗 [Pages](https://simiely.github.io/carselection/)）
+  —— 汽车选购辅助筛选问卷（23 大类 / 117 题，纯前端零依赖）
+- 「说明」区补充 **🔒 = 私有仓库** 图例
+
 ## 仓库 · 2026-10-09 · 索引新增 TopoGun3-Chinese-Localization
 
 - 索引「🧰 本地小工具」新增 [`TopoGun3-Chinese-Localization`](https://github.com/Simiely/TopoGun3-Chinese-Localization)
