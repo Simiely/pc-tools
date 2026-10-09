@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-10-09（commit `64ec61b`）索引新增 gh-fetcher；「不归档」理由限定为 PC 工具
+> 📌 **文档基线**：2026-10-09 索引新增 MultiSwitch（🔒）/ carselection，补充 🔒 图例
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
