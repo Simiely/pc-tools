@@ -13,6 +13,7 @@
 | **[`clipboard-tool`](https://github.com/Simiely/clipboard-tool)** | 多用户剪贴板管理：粘贴即存 / 拼音搜索 / 标签 / WebDAV 同步 | C# · WPF + Node | [`v0.7.6`](https://github.com/Simiely/clipboard-tool/releases/latest) | 2026-09-13 |
 | **[`MonitorBrightness`](https://github.com/Simiely/MonitorBrightness)** | 外接显示器亮度定时调节（DDC/CI 硬件调光，免常驻单文件 exe） | Python · tkinter | [`v1.6.4`](https://github.com/Simiely/MonitorBrightness/releases/latest) | 2026-10-08 |
 | **[`gh-latency`](https://github.com/Simiely/gh-latency)** | GitHub 延迟监视器 | Python · GUI | [`v1.0.0`](https://github.com/Simiely/gh-latency/releases/latest) | 2026-10-08 |
+| **[`gh-fetcher`](https://github.com/Simiely/gh-fetcher)** | GitHub 仓库 / Release 浏览下载器：镜像链路由 + 字节校验回退，专治直连抽风 | Python · tkinter | [`v1.0.0`](https://github.com/Simiely/gh-fetcher/releases/latest) | 2026-10-08 |
 
 ### 🔧 系统修复
 
@@ -43,9 +44,10 @@
 
 - **一个工具一个仓库**：源码、Issue、Releases（exe 下载）都在各自仓库；
 - 本仓库只负责**索引与导航**，新增工具＝在这里加一行；
-- 为什么不做 monorepo / 不归档：工具大多通过 **GitHub Releases 分发 exe**，而仓库一旦归档就**完全只读、Releases 也发不了**。所以统一改为「各仓库独立 + 本仓做索引」。
+- **为什么 PC 工具不做 monorepo、也不归档**：工具靠 **GitHub Releases 分发 exe**、**发版频繁**（单个工具 10~12 个 Release），而仓库一旦归档就**完全只读、Releases 也发不了**，所以统一为「各仓库独立 + 本仓做索引」。
+  （**插件类不同**：插件小、发版少 → 由总管仓库装代码、成员仓归档，见 [`ae-tools`](https://github.com/Simiely/ae-tools) · [`blender-addons`](https://github.com/Simiely/blender-addons) · [`c4d-tools`](https://github.com/Simiely/c4d-tools)。）
 - 文档规范遵循 [knowledge-base 单项目规范](https://github.com/Simiely/knowledge-base)。
 
 ## 相关仓库
 
-- 其它领域的工具索引：[`ae-tools`](https://github.com/Simiely/ae-tools)（After Effects）· [`blender-addons`](https://github.com/Simiely/blender-addons)（Blender）· [`c4d-tools`](https://github.com/Simiely/c4d-tools)（Cinema 4D）
+- 其它领域的总管仓库：[`ae-tools`](https://github.com/Simiely/ae-tools)（After Effects）· [`blender-addons`](https://github.com/Simiely/blender-addons)（Blender 插件）· [`c4d-tools`](https://github.com/Simiely/c4d-tools)（Cinema 4D 插件）

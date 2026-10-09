@@ -1,5 +1,13 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-09 · 索引新增 gh-fetcher
+
+- 索引新增 [`gh-fetcher`](https://github.com/Simiely/gh-fetcher)（v1.0.0）—— GitHub 仓库 / Release 浏览下载器
+- 「不归档」的理由**明确限定为 PC 工具**（插件类仓库已改为「总管装代码 + 成员仓归档」）
+- 「相关仓库」措辞：「工具索引」→「总管仓库」
+
+---
+
 ## 仓库 · 2026-10-08 · 索引新增「oc-plugin-activator」
 
 - 索引新增 [`oc-plugin-activator`](https://github.com/Simiely/oc-plugin-activator)（v1.0）

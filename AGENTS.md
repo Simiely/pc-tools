@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-10-08（commit `49bcf77`）索引新增 oc-plugin-activator；「Blender 生态」扩为「3D / 渲染生态」
+> 📌 **文档基线**：2026-10-09（commit `<本提交>`）索引新增 gh-fetcher；「不归档」理由限定为 PC 工具
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
@@ -14,4 +14,4 @@
 - 表格里的**最新版本 / 最近更新**取自各仓库的 Releases 与 push 时间，改版后记得同步
 
 ## 相关
-- 同类索引仓库：[`ae-tools`](https://github.com/Simiely/ae-tools) · [`blender-addons`](https://github.com/Simiely/blender-addons) · [`c4d-tools`](https://github.com/Simiely/c4d-tools)
+- 同领域总管仓库：[`ae-tools`](https://github.com/Simiely/ae-tools) · [`blender-addons`](https://github.com/Simiely/blender-addons) · [`c4d-tools`](https://github.com/Simiely/c4d-tools)
