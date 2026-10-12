@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-10-09 索引新增 MultiSwitch（🔒）/ carselection，补充 🔒 图例
+> 📌 **文档基线**：2026-10-13 索引新增 VideoToolbox，新建「🎥 音视频（PC 端）」分类
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
