@@ -11,8 +11,8 @@
 |---|---|---|---|---|
 | **[`WindowTinter`](https://github.com/Simiely/WindowTinter)** | 给任意窗口叠深色半透明蒙版；切到后台自动变半透明 | C# · WinForms | [`v6.1.0`](https://github.com/Simiely/WindowTinter/releases/latest) | 2026-08-06 |
 | **[`clipboard-tool`](https://github.com/Simiely/clipboard-tool)** | 多用户剪贴板管理：粘贴即存 / 拼音搜索 / 标签 / WebDAV 同步 | C# · WPF + Node | [`v0.7.6`](https://github.com/Simiely/clipboard-tool/releases/latest) | 2026-09-13 |
-| **[`MonitorBrightness`](https://github.com/Simiely/MonitorBrightness)** | 外接显示器亮度定时调节（DDC/CI 硬件调光，免常驻单文件 exe） | Python · tkinter | [`v1.6.4`](https://github.com/Simiely/MonitorBrightness/releases/latest) | 2026-10-08 |
-| **[`gh-latency`](https://github.com/Simiely/gh-latency)** | GitHub 延迟监视器 | Python · GUI | [`v1.0.0`](https://github.com/Simiely/gh-latency/releases/latest) | 2026-10-08 |
+| **[`MonitorBrightness`](https://github.com/Simiely/MonitorBrightness)** | 外接显示器亮度定时调节（DDC/CI 硬件调光，免常驻单文件 exe） | Python · tkinter | [`v1.6.5`](https://github.com/Simiely/MonitorBrightness/releases/latest) | 2026-10-08 |
+| **[`gh-latency`](https://github.com/Simiely/gh-latency)** | GitHub 延迟监视器 | Python · GUI | [`v1.0.1`](https://github.com/Simiely/gh-latency/releases/latest) | 2026-10-10 |
 | **[`gh-fetcher`](https://github.com/Simiely/gh-fetcher)** | GitHub 仓库 / Release 浏览下载器：镜像链路由 + 字节校验回退，专治直连抽风 | Python · tkinter | [`v1.0.0`](https://github.com/Simiely/gh-fetcher/releases/latest) | 2026-10-08 |
 
 ### 🔧 系统修复
@@ -42,6 +42,12 @@
 > 它们名字带 `blender-` / `oc-`，但**都是跑在 PC 上的独立程序，不是宿主软件的插件** ——
 > Blender 插件见 [`blender-addons`](https://github.com/Simiely/blender-addons)，
 > C4D 插件见 [`c4d-tools`](https://github.com/Simiely/c4d-tools)。
+
+### 🎥 音视频（PC 端）
+
+| 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
+|---|---|---|---|---|
+| **[`VideoToolbox`](https://github.com/Simiely/VideoToolbox)** | 视频转码 / 压缩工具箱：H.264 / H.265 / AV1 转码、视频转 GIF、选段裁切、合轨、图片转换、批量队列（内置 ffmpeg，解压即用） | Python · PySide6 | [`v1.0.0`](https://github.com/Simiely/VideoToolbox/releases/latest) | 2026-10-12 |
 
 ## 说明
 
