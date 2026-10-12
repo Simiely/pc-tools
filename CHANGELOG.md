@@ -1,5 +1,13 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-10-13 · 索引新增 VideoToolbox（新建「🎥 音视频（PC 端）」分类）
+
+- 索引新增分类 **「🎥 音视频（PC 端）」**，首条为 **[`VideoToolbox`](https://github.com/Simiely/VideoToolbox)**（`v1.0.0`）
+  —— Windows 视频转码 / 压缩工具箱：PySide6 界面 + 内置 ffmpeg（full 版），
+  支持硬编自动探测、视频转 GIF、选段裁切、合轨与批量任务队列
+- 顺带同步两处过期版本：「🖥️ 常驻程序」`MonitorBrightness` `v1.6.4` → `v1.6.5`；
+  `gh-latency` `v1.0.0` → `v1.0.1`（最近更新同步为 2026-10-10）
+
 ## 仓库 · 2026-10-09 · 索引新增 MultiSwitch + carselection
 
 - 「🔧 系统修复」新增 **`MultiSwitch`**（🔒 私有）—— TRAE Work 多账号安全切换（Python · tkinter，`v1.9.3`，30 个 Release）；
