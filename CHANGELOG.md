@@ -1,5 +1,11 @@
 # CHANGELOG.md · 仓库级变更
 
+## 仓库 · 2026-11-18 · 接入 repo-kit 机器层
+
+- 新增 `tools/repo-kit/`、`schema/taxonomy.json`、`schema/kit.lock.json`、`.github/workflows/repo-check.yml`（`link-only`，kit 2.8.0 / spec 2.1.3）
+- 只查 Markdown 的链接 / 锚点与版本锁；**索引表与全部工具条目未改动**
+- AGENTS 补一句：`tools/repo-kit/` 是规范分发的校验器（有哈希锁），不算「工具源码」，与「只放文档」不冲突
+
 ## 仓库 · 2026-10-13 · 索引新增 VideoToolbox（新建「🎥 音视频（PC 端）」分类）
 
 - 索引新增分类 **「🎥 音视频（PC 端）」**，首条为 **[`VideoToolbox`](https://github.com/Simiely/VideoToolbox)**（`v1.0.0`）
