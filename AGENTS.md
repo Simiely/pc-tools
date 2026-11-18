@@ -1,6 +1,6 @@
 # AGENTS.md · 项目规则
 
-> 📌 **文档基线**：2026-11-18 接入 repo-kit 机器层（`link-only`，kit 2.8.0 / spec 2.1.3）
+> 📌 **文档基线**：2026-11-18（commit `e15a8d0`）接入 repo-kit 机器层（`link-only`，kit 2.8.0 / spec 2.1.3）
 > **更新索引后，请更新此行**（日期 + 新 commit hash），并在 CHANGELOG 追加。
 
 ## 本仓库定位（重要）
