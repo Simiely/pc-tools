@@ -29,8 +29,8 @@
 | 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
 | **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
-| **[`TopoGun3-Chinese-Localization`](https://github.com/Simiely/TopoGun3-Chinese-Localization)** | TopoGun 3 简体中文汉化包（GLSL 着色器 + PowerShell 安装脚本） | GLSL · PS1 | — | 2026-08-03 |
-| **[`carselection`](https://github.com/Simiely/carselection)** 🔗[页面](https://simiely.github.io/carselection/) | 汽车选购辅助筛选：23 大类 / 117 题问卷 → 生成结构化提示词供 AI 推荐车型 | HTML · JS（零依赖） | — | 2026-07-04 |
+| ~~`TopoGun3-Chinese-Localization`~~（已归档） | TopoGun 3 简体中文汉化包（GLSL 着色器 + 安装脚本），项目已完成、仓库只读 | GLSL · PS1 | — | 2026-11-19 |
+| ~~`carselection`~~（已归档） | 汽车选购辅助筛选：23 大类 / 117 题问卷 → 结构化提示词；仓库只读、Pages 页面保留 🔗[页面](https://simiely.github.io/carselection/) | HTML · JS（零依赖） | — | 2026-11-19 |
 
 ### 🎬 3D / 渲染生态（PC 端）
 
@@ -55,6 +55,7 @@
 - 本仓库只负责**索引与导航**，新增工具＝在这里加一行；
 - **为什么 PC 工具不做 monorepo、也不归档**：工具靠 **GitHub Releases 分发 exe**、**发版频繁**（单个工具 10~12 个 Release），而仓库一旦归档就**完全只读、Releases 也发不了**，所以统一为「各仓库独立 + 本仓做索引」。
   （**插件类不同**：插件小、发版少 → 由总管仓库装代码、成员仓归档，见 [`ae-tools`](https://github.com/Simiely/ae-tools) · [`blender-addons`](https://github.com/Simiely/blender-addons) · [`c4d-tools`](https://github.com/Simiely/c4d-tools)。）
+- **例外**：不发 Release、已停止维护的一次性工具可归档（如 `TopoGun3-Chinese-Localization`、`carselection`）——归档后仍可读、GitHub Pages 页面照常访问，只是不再接受改动与自动部署。
 - 🔒 标记的是**私有仓库** —— 条目保留便于本人一览，但不提供对外链接（外部访问会 404）。
 - 文档规范遵循 [knowledge-base 单项目规范](https://github.com/Simiely/knowledge-base)。
 
