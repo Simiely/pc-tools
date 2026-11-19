@@ -21,7 +21,7 @@
 |---|---|---|---|---|
 | **[`ExplorerBlurMica-whitebar-fix`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix)** | 修 ExplorerBlurMica 拉起下载目录时的底部白条 | 脚本 | [`v1.0.0`](https://github.com/Simiely/ExplorerBlurMica-whitebar-fix/releases/latest) | 2026-07-12 |
 | **[`windows-explorer-refresh-fix`](https://github.com/Simiely/windows-explorer-refresh-fix)** | 修下载后资源管理器不自动刷新（要按 F5） | 脚本 | [`v1.0.0`](https://github.com/Simiely/windows-explorer-refresh-fix/releases/latest) | 2026-07-11 |
-| **[`edge-multi-account-cookie`](https://github.com/Simiely/edge-multi-account-cookie)** | Edge 多账号 Cookie 切换 | JavaScript | [`v2.11.11`](https://github.com/Simiely/edge-multi-account-cookie/releases/latest) | 2026-08-24 |
+| ~~`edge-multi-account-cookie`~~（已归档） | Edge 多账号 Cookie 切换；仓库只读、Releases 与 Pages 保留 | JavaScript | v2.11.11 | 2026-11-19 |
 | `MultiSwitch` 🔒 | TRAE Work 多账号安全切换：只替换登录态小文件、保护 3.5GB `ModularData` 环境不重下（另含积分查询 + 自动签到两套子程序） | Python · tkinter | `v1.9.3` | 2026-10-08 |
 
 ### 🧰 本地小工具
