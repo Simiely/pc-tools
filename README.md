@@ -28,7 +28,6 @@
 
 | 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
-| **[`dirmap`](https://github.com/Simiely/dirmap)** | 把文件夹生成可编辑表格（动态列 / 标签 / 排序） | HTML · JS | — | 2026-10-08 |
 | ~~`TopoGun3-Chinese-Localization`~~（已归档） | TopoGun 3 简体中文汉化包（GLSL 着色器 + 安装脚本），项目已完成、仓库只读 | GLSL · PS1 | — | 2026-11-19 |
 | ~~`carselection`~~（已归档） | 汽车选购辅助筛选：23 大类 / 117 题问卷 → 结构化提示词；仓库只读、Pages 页面保留 🔗[页面](https://simiely.github.io/carselection/) | HTML · JS（零依赖） | — | 2026-11-19 |
 
