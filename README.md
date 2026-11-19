@@ -36,7 +36,7 @@
 | 工具 | 说明 | 技术栈 | 最新版本 | 最近更新 |
 |---|---|---|---|---|
 | **[`blender-render-console`](https://github.com/Simiely/blender-render-console)** | 无头调 Blender 渲染控制台：实时进度 / 预计结束时间 / 崩溃自动续跑 | Python · tkinter | [`v0.8.0`](https://github.com/Simiely/blender-render-console/releases/latest) | 2026-10-06 |
-| **[`oc-plugin-activator`](https://github.com/Simiely/oc-plugin-activator)** | 一键清空 OctaneRender 缓存 + 部署资源（Cinema 4D / OC 用） | Python · tkinter → exe | [`v1.0`](https://github.com/Simiely/oc-plugin-activator/releases/latest) | 2026-06-23 |
+| ~~`oc-plugin-activator`~~（已归档） | 一键清空 OctaneRender 缓存 + 部署资源（Cinema 4D / OC 用），仓库只读、v1.0 Release 保留 | Python · tkinter → exe | v1.0 | 2026-11-19 |
 
 > 它们名字带 `blender-` / `oc-`，但**都是跑在 PC 上的独立程序，不是宿主软件的插件** ——
 > Blender 插件见 [`blender-addons`](https://github.com/Simiely/blender-addons)，
